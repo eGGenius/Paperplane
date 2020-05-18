@@ -10,6 +10,10 @@ export class HttpService {
         this.url = apiUrl;
     }
 
+    public getAllCustomers() {
+        return this.httpClient.get(this.url + 'customers/all');
+    }
+
     public getAllMaterialStock() {
         return this.httpClient.get(this.url + 'materials/all');
     }

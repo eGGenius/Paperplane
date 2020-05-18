@@ -3,7 +3,11 @@ body {
     bottom: 0;
     height: calc(100vh - 92px);
     width: 100vw;
-    // overflow-y: scroll
+    overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .main-container {
