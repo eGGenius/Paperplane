@@ -14,8 +14,8 @@ export class HttpService {
         return this.httpClient.get(this.url + 'materials/all');
     }
 
-    public updateMaterialStock(type: String, number: Number) {
-        return this.httpClient.put(this.url + 'materials/' + type, JSON.parse('{"number":"' + number + '"}'));
+    public updateMaterialStock(materialId: String, number: Number) {
+        return this.httpClient.put(this.url + 'materials/' + materialId, JSON.parse('{"number":"' + number + '"}'));
     }
 
     public getAllProductStock() {

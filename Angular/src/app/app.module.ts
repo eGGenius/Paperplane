@@ -11,7 +11,7 @@ import { OrdersComponent } from './views/orders/orders.component';
 import { CustomersComponent } from './views/customers/customers.component';
 import { ModelsComponent } from './views/models/models.component';
 import { ProductsComponent } from './views/products/products.component';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { ProductsComponent } from './views/products/products.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     HttpService,

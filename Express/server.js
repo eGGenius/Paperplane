@@ -7,7 +7,7 @@ const app = express();
 const serverPort = '8100';
 const apiPrefix = '/api';
 
-const defaultCollections = ['materials', 'customers', 'orders', 'models', 'transactions'];
+const defaultCollections = ['materials', 'customers', 'orders', 'models', 'account'];
 
 mongoose.connect('mongodb://localhost:27017/paperplane', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true });
 
@@ -31,8 +31,8 @@ db.once('open', function () {
 
 
 var materialSchema = new mongoose.Schema({
-    type: String,
-    stock: String,
+    materialId: String,
+    stock: Number,
     pricePerUnit: Number
 });
 
@@ -51,7 +51,7 @@ var orderSchema = new mongoose.Schema({
 
 var modelSchema = new mongoose.Schema({
     identifier: String,
-    materials: [{ type: String, number: Number }],
+    materials: [{ materialId: String, number: Number }],
     sellingPrice: Number,
     stock: Number
 });
@@ -83,10 +83,10 @@ app.get(apiPrefix + "/materials/all", function (req, res) {
 
 });
 
-app.put(apiPrefix + "/materials/:type", function (req, res) {
+app.put(apiPrefix + "/materials/:id", function (req, res) {
 
     // public updateMaterialStock(type: String, number: Number) {
-    //     return this.httpClient.put(this.url + 'materials/' + type, JSON.parse('{"number":"' + number + '"}'));
+    //     return this.httpClient.put(this.url + 'materials/' + id, JSON.parse('{"number":"' + number + '"}'));
     // }
 
 });

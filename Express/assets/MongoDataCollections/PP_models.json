@@ -1,0 +1,3 @@
+{"identifier":"Paperstar 1000","materials":[{"materialId":"pp-m001","number":4}],"sellingPrice":2.90,"stock":10}
+{"identifier":"Europaper","materials":[{"materialId":"pp-m001","number":4},{"materialId":"pp-m003","number":2}],"sellingPrice":6.90,"stock":4}
+{"identifier":"Europaper Premium","materials":[{"materialId":"pp-m001","number":10},{"materialId":"pp-m003","number":8},{"materialId":"pp-m004","number":4}],"sellingPrice":8.90,"stock":4}

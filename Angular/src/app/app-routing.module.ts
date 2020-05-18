@@ -10,7 +10,7 @@ import { ProductsComponent } from './views/products/products.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'material', component: MaterialsComponent },
+  { path: 'materials', component: MaterialsComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'models', component: ModelsComponent },

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-materials',
@@ -10,6 +11,7 @@ export class MaterialsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
