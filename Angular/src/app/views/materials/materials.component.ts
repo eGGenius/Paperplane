@@ -8,10 +8,9 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class MaterialsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
 
   }
-
 }

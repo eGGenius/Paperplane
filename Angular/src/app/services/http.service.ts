@@ -27,7 +27,7 @@ export class HttpService {
     }
 
     public createNewOrder(customerId: String, items: [{ model: String, number: Number }]) {
-        return this.httpClient.post(this.url + 'orders', JSON.parse('{"customerId":"' + customerId + '","items":"' + items + '"}'));
+        return this.httpClient.post(this.url + 'order', JSON.parse('{"customerId":"' + customerId + '","items":"' + items + '"}'));
     }
 
     public getAllOrders() {

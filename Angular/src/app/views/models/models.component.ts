@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-models',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModelsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
   }
