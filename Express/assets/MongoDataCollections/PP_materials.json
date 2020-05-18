@@ -1,4 +1,4 @@
-{"materialId":"pp-m001","stock":"14","pricePerUnit":"0.02"}
-{"materialId":"pp-m002","stock":"8","pricePerUnit":"0.10"}
-{"materialId":"pp-m003","stock":"5","pricePerUnit":"0.25"}
-{"materialId":"pp-m004","stock":"2","pricePerUnit":"0.50"}
+{"materialId":"pp-m001","identifier":"Graupappe","stock":"14","pricePerUnit":"0.02"}
+{"materialId":"pp-m002","identifier":"Fotokarton einfarbig","stock":"8","pricePerUnit":"0.10"}
+{"materialId":"pp-m003","identifier":"Motivkarton","stock":"5","pricePerUnit":"0.25"}
+{"materialId":"pp-m004","identifier":"Ultraleichtkarton","stock":"2","pricePerUnit":"0.50"}

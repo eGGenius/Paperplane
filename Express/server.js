@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const fs = require('fs');
+const fs = require('fs');
 const { v1: uuidv1 } = require('uuid');
 
 const app = express();
@@ -35,9 +35,9 @@ db.once('open', function () {
     });
 });
 
-
 var materialSchema = new mongoose.Schema({
     materialId: String,
+    identifier: String,
     stock: Number,
     pricePerUnit: Number
 });
