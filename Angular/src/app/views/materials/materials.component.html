@@ -1,13 +1,13 @@
 <!-- List all Materials and current stock -->
 <!-- Properties of materials: materialId, stock, pricePerUnit -->
 <div class="materialStockOverview-container">
-    <h1>Übersicht des Materialbestands</h1>
+    <h2>Übersicht des Materialbestands</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Material-ID</th>
-                    <!-- <th scope="col">Name</th> -->
+                    <th scope="col">Name</th>
                     <th scope="col">auf Lager (Stück)</th>
                     <th scope="col">Stückpreis</th>
                 </tr>
@@ -15,7 +15,7 @@
             <tbody>
                 <tr *ngFor="let material of materialStock" scope="row">
                     <td>{{material.materialId}}</td>
-                    <!-- <td>{{material.identifier}}</td> -->
+                    <td>{{material.identifier}}</td>
                     <td>{{material.stock}}</td>
                     <td>{{material.pricePerUnit}}</td>
                 </tr>
@@ -27,14 +27,14 @@
 
 <!-- Update Stock of a Material -->
 <div class="updateMaterialStock-container">
-    <h1>Materialbestand aktualisieren</h1>
+    <h2>Materialbestand aktualisieren</h2>
     <form #updateStock="ngForm" (ngSubmit)="onSubmit(updateStock.value)">
         <div class="form-group">
             <label for="materialId">Material</label>
             <select class="form-control" name="materialId" ngModel required>
                 <!-- <option [value]=''>Material wählen...</option> -->
                 <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
-                <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.materialId}}</option>
+                <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.identifier}}</option>
             </select>
         </div>
 

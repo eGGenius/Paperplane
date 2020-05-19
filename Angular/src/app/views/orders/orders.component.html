@@ -1,1 +1,37 @@
-<p>These are all orders</p>
+<!-- List all Materials and current stock -->
+<!-- Properties of materials: materialId, stock, pricePerUnit -->
+<div class="ordersOverview-container">
+    
+    <h2>Auftragsübersicht</h2>
+    
+    <div class="order-filter-container">
+        <p>ToDo: Filtern nach Order-Status</p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Auftrags-ID</th>
+                    <th scope="col">Kunden-ID</th>
+                    <th scope="col">Waren</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Gesamtpreis</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders" scope="row">
+                    <td>{{order.orderId}}</td>
+                    <td>{{order.customerId}}</td>
+                    <td>
+                        <ul *ngFor="let item of order.items">
+                            <li>{{item.number}} x {{item.model}}</li>
+                        </ul>
+                    </td>
+                    <td>{{order.status}}</td>
+                    <td>{{order.totalPrice}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
