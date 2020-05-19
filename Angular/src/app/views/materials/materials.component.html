@@ -1,7 +1,7 @@
 <!-- List all Materials and current stock -->
 <!-- Properties of materials: materialId, stock, pricePerUnit -->
 <div class="materialStockOverview-container">
-    <h1>Übersicht des Materialbestands</h1>
+    <h2>Übersicht des Materialbestands</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
@@ -27,7 +27,7 @@
 
 <!-- Update Stock of a Material -->
 <div class="updateMaterialStock-container">
-    <h1>Materialbestand aktualisieren</h1>
+    <h2>Materialbestand aktualisieren</h2>
     <form #updateStock="ngForm" (ngSubmit)="onSubmit(updateStock.value)">
         <div class="form-group">
             <label for="materialId">Material</label>
