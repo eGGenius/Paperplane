@@ -53,7 +53,6 @@ img.logo {
     width: 30vw;
     display: inline-flex;
     justify-content: space-between;
-    // margin-right: 50px;
     margin-top: 15px;
 }
 
@@ -70,4 +69,8 @@ img.logo {
 
 .nav-item:hover {    
     background-color: #A0ABFF;
+}
+
+.site-content {
+    margin-bottom: 1rem;
 }
