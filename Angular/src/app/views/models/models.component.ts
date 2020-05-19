@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
+import { Model } from 'src/assets/interfaces/Model';
 
 @Component({
   selector: 'app-models',
@@ -7,6 +8,8 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./models.component.scss']
 })
 export class ModelsComponent implements OnInit {
+
+  models: Model[];
 
   constructor(private http: HttpService) { }
 
