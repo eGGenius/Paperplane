@@ -7,9 +7,31 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
+  
+  orders: any;
 
   constructor(private http: HttpService) { }
 
   ngOnInit(): void {
+    this.http.getAllOrders().subscribe((data) => {
+      this.orders = data;
+    });
   }
 }
+
+// Order HTTP Requests in http-Service:
+
+// POST createNewOrder(customerId: String, items: [{ model: String, number: Number }]) {
+//       {"customerId":"' + customerId + '",
+//       "items":"' + items + '"}
+
+  // GET getAllOrders()
+
+  // GET getAllOrdersInProgress()
+
+  // GET getAllOrdersDone()
+  
+  // GET getAllOrdersInDelivery()
+
+  // PUT updateOrderToDone(orderId: String) 
+    // '{"status":"done"}'));

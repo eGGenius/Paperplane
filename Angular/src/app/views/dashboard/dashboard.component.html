@@ -1,2 +1,25 @@
-<p>This is the Dashboard</p>
-<p *ngFor="let customer of result">{{ customer.customerId }}</p>
+<h1>This is the Dashboard</h1>
+
+<div class="materialStockOverview-container">
+  <h1>Materialbestand</h1>
+  <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+          <thead class="thead-light">
+              <tr>
+                  <th scope="col">Material-ID</th>
+                  <!-- <th scope="col">Name</th> -->
+                  <th scope="col">auf Lager (Stück)</th>
+                  <th scope="col">Stückpreis</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let material of materialStock" scope="row">
+                  <td>{{material.materialId}}</td>
+                  <!-- <td>{{material.identifier}}</td> -->
+                  <td>{{material.stock}}</td>
+                  <td>{{material.pricePerUnit}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

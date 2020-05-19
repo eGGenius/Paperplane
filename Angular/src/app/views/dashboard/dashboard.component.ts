@@ -8,16 +8,15 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class DashboardComponent implements OnInit {
 
-  result: any;
+  materialStock: any;
 
   constructor(private http: HttpService) {
 
   }
 
   ngOnInit(): void {
-    this.http.getAllCustomers().subscribe(data => {
-
-      this.result = data;
+    this.http.getAllMaterialStock().subscribe((data) => {
+      this.materialStock = data;
     });
   }
 }

@@ -1,0 +1,28 @@
+[
+    {
+        "orderId": "pp-o001",
+        "customerId": "pp-c001",
+        "items": [
+            {
+            "model": "Europaper Premium",
+            "number": "5"
+            },
+            {
+            "model": "Paperstar 1000",
+            "number": "10"
+            }
+        ],
+        "status": "delivery",
+        "totalPrice": 73.5
+    },
+    {
+        "orderId": "pp-o002",
+        "customerId": "pp-c003",
+        "items": {
+            "model": "Europaper",
+            "number": 5
+        },
+        "status": "progress",
+        "totalPrice": 34.5
+    }
+]
