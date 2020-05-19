@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
+import { Order } from 'src/assets/interfaces/Order';
 
 @Component({
   selector: 'app-orders',
@@ -8,12 +9,12 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class OrdersComponent implements OnInit {
   
-  orders: any;
+  orders: Order[];
 
   constructor(private http: HttpService) { }
 
   ngOnInit(): void {
-    this.http.getAllOrders().subscribe((data) => {
+    this.http.getAllOrders().subscribe((data: Order[]) => {
       this.orders = data;
     });
   }

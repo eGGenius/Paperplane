@@ -1,1 +1,43 @@
-<p>This is the product stock</p>
+<div class="productStockOverview-container">
+    <h2>Produktbestand</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Modellname</th>
+                    <th scope="col">Bestand (Stück)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products" scope="row">
+                    <td>{{product.identifier}}</td>
+                    <td>{{product.stock}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Update Stock of a Product -->
+<div class="updateProductStock-container">
+    <h2>Produktbestand aktualisieren</h2>
+    <form #updateStock="ngForm" (ngSubmit)="onSubmit(updateStock.value)">
+        <div class="form-group">
+            <label for="modelIdentifier">Material</label>
+            <select class="form-control" name="modelIdentifier" ngModel required>
+                <!-- <option [value]=''>Material wählen...</option> -->
+                <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
+                <option *ngFor="let product of products" [value]="product.identifier">{{product.identifier}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Anzahl</label>
+            <input type="number" class="form-control" name="amount" ngModel required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Bestätigen</button>
+    </form>
+</div>
