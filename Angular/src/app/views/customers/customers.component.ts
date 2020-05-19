@@ -8,9 +8,18 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class CustomersComponent implements OnInit {
 
+  customers: any;
+  
   constructor(private http: HttpService) { }
 
   ngOnInit(): void {
+    this.http.getAllCustomers().subscribe((data) => {
+      this.customers = data
+    });
   }
 
 }
+
+//     public getAllCustomers() {
+//   return this.httpClient.get(this.url + 'customers/all');
+// }
