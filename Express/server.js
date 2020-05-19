@@ -111,7 +111,7 @@ app.get(apiPrefix + "/materials/all", function (req, res) {
 });
 
 app.put(apiPrefix + "/materials/:id", function (req, res) {
-    Material.findOneAndUpdate({ materialId: req.params.id }, { $set: { stock: req.body.number } }, function (err, material) {
+    Material.findOneAndUpdate({ materialId: req.params.id }, { $inc: { stock: req.body.number } }, function (err, material) {
         if (err) return console.log(err);
         else return res.status(200).send(material);
     });
@@ -125,7 +125,7 @@ app.get(apiPrefix + "/products/all", function (req, res) {
 });
 
 app.put(apiPrefix + "/products/:model", function (req, res) {
-    Model.findOneAndUpdate({ identifier: req.params.model }, { $set: { stock: req.body.number } }, function (err, model) {
+    Model.findOneAndUpdate({ identifier: req.params.model }, { $inc: { stock: req.body.number } }, function (err, model) {
         if (err) return console.log(err);
         else return res.status(200).send(model);
     });
@@ -186,7 +186,7 @@ app.get(apiPrefix + "/balance", function (req, res) {
 });
 
 app.put(apiPrefix + "/balance", function (req, res) {
-    Account.findOneAndUpdate({ identifier: "main-account" }, { $set: { balance: req.body.value } }, function (err, balance) {
+    Account.findOneAndUpdate({ identifier: "main-account" }, { $inc: { balance: req.body.value } }, function (err, balance) {
         if (err) return console.log(err);
         else res.status(200).send(balance);
     });
