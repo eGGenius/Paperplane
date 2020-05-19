@@ -7,7 +7,7 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Material-ID</th>
-                    <!-- <th scope="col">Name</th> -->
+                    <th scope="col">Name</th>
                     <th scope="col">auf Lager (Stück)</th>
                     <th scope="col">Stückpreis</th>
                 </tr>
@@ -15,7 +15,7 @@
             <tbody>
                 <tr *ngFor="let material of materialStock" scope="row">
                     <td>{{material.materialId}}</td>
-                    <!-- <td>{{material.identifier}}</td> -->
+                    <td>{{material.identifier}}</td>
                     <td>{{material.stock}}</td>
                     <td>{{material.pricePerUnit}}</td>
                 </tr>
@@ -34,7 +34,7 @@
             <select class="form-control" name="materialId" ngModel required>
                 <!-- <option [value]=''>Material wählen...</option> -->
                 <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
-                <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.materialId}}</option>
+                <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.identifier}}</option>
             </select>
         </div>
 
