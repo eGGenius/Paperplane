@@ -2,14 +2,15 @@
   <div class="row">
     <div class="col-sm">
       <div class="chart">
-        <p>Materialbestand</p>
+        <h2>Materialbestand</h2>
         <apx-chart [series]="matChartOptions.series" [chart]="matChartOptions.chart" [xaxis]="matChartOptions.xaxis">
         </apx-chart>
+        <!-- <img src="../assets/lager.jpeg"> -->
       </div>
     </div>
     <div class="col-sm">
       <div class="chart">
-        <p>Produktbestand</p>
+        <h2>Produktbestand</h2>
         <apx-chart [series]="prodChartOptions.series" [chart]="prodChartOptions.chart" [xaxis]="prodChartOptions.xaxis">
         </apx-chart>
       </div>
@@ -18,7 +19,7 @@
 </div>
 <br>
 <div class="container">
-  <p>Auftragsbestand</p>
+  <h2>Auftragsbestand</h2>
   <div class="table-responsive">
     <table class="table table-bordered table-striped">
       <thead class="thead-light">
@@ -48,9 +49,54 @@
 </div>
 <br>
 <div class="container">
-  Getätigte Lieferungen
+  <h2>Getätigte Lieferungen</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Auftrags-ID</th>
+          <th scope="col">Kunden-ID</th>
+          <th scope="col">Waren</th>
+          <th scope="col">Status</th>
+          <th scope="col">Gesamtpreis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of ordersDone" scope="row">
+          <td>{{order.orderId}}</td>
+          <td>{{order.customerId}}</td>
+          <td>
+            <ul *ngFor="let item of order.items">
+              <li>{{item.number}} x {{item.model}}</li>
+            </ul>
+          </td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalPrice}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <br>
 <div class="container">
-  Aktuelle Gewinn- und Verlustrechung
+  <h2>Aktuelle Gewinn- und Verlustrechung</h2>
+  <p>muss angepasst werden, bin mir nicht sicher was da rein muss</p>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th colspan="2" scope="col">SOLL</th>
+          <th colspan="2" scope="col">HABEN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wareneinsatz für Lagerbestand</td>
+          <td  class="table-danger">{{wareneinsatz}} €</td>
+          <td>Erlös aus allen Aufträgen</td>
+          <td  class="table-success">{{erloes}} €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

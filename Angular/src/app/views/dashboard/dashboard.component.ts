@@ -71,6 +71,9 @@ export class DashboardComponent {
     };
   };
   orders: Order[];
+  ordersDone: Order[];
+  wareneinsatz: number = 0;
+  erloes: any;
 
 
   constructor(private http: HttpService) {
@@ -81,9 +84,8 @@ export class DashboardComponent {
       var mat_val: number[] = new Array(Object.keys(this.materialStock).length)
       for (var i = 0; i < mat_val.length; i++) {
         mat_val[i] = this.materialStock[i].stock;
-      }
-      for (var i = 0; i < mat_names.length; i++) {
         mat_names[i] = this.materialStock[i].materialId;
+        this.wareneinsatz = this.wareneinsatz + this.materialStock[i].stock * this.materialStock[i].pricePerUnit;
       }
 
       this.http.getAllProductStock().subscribe((data: Model[]) => {
@@ -99,6 +101,7 @@ export class DashboardComponent {
         }
 
         this.matChartOptions = {
+
           series: [{
             name: "Series",
             data: mat_val
@@ -111,7 +114,7 @@ export class DashboardComponent {
             text: "Basic Radar Chart"
           },
           xaxis: {
-            categories: mat_names
+            categories: mat_names,
           }
         };
         this.prodChartOptions = {
@@ -130,11 +133,31 @@ export class DashboardComponent {
             categories: prod_names
           }
         };
+        // let filters = {status: ["delivered"]};
         this.http.getAllOrders().subscribe((data: Order[]) => {
           this.orders = data;
+          this.erloes = 0;
+          for (var i = 0; i < Object.keys(this.orders).length; i++) {
+            this.erloes = this.erloes + this.orders[i].totalPrice;
+          }
+          let filters1 = {
+            status: ["progress", "delivery"]
+          }
+          this.orders = this.orders.filter(({
+            status
+          }) => filters1.status.some(n => status.includes(n)));
+
+          this.ordersDone = data;
+          let filters2 = {
+            status: ["delivered"]
+          }
+          this.ordersDone = this.ordersDone.filter(({
+            status
+          }) => filters2.status.some(n => status.includes(n)));
+
+
         });
       });
     });
   }
 }
-
