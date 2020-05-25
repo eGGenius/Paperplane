@@ -18,7 +18,16 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.getAllOrders().subscribe((data: Order[]) => {
-      this.orders = data;
+      this.orders = data;  
+        // Folgende Funktion filtert alle Aufträge die den Status "progress" und "delivery" haben
+        // kann für eine Frontend Filterung so übernommen werden
+        
+      let filters = {
+        status: ["progress", "delivery"]
+      }
+      this.orders = this.orders.filter(({
+        status
+      }) => filters.status.some(n => status.includes(n)));
     });
   }
 

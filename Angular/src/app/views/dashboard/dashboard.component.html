@@ -1,23 +1,102 @@
-<div class="materialStockOverview-container">
-    <h1>Materialbestand</h1>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Material-ID</th>
-                    <!-- <th scope="col">Name</th> -->
-                    <th scope="col">auf Lager (Stück)</th>
-                    <th scope="col">Stückpreis</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let material of materialStock" scope="row">
-                    <td>{{material.materialId}}</td>
-                    <!-- <td>{{material.identifier}}</td> -->
-                    <td>{{material.stock}}</td>
-                    <td>{{material.pricePerUnit}}</td>
-                </tr>
-            </tbody>
-        </table>
+<div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="chart">
+        <h2>Materialbestand</h2>
+        <apx-chart [series]="matChartOptions.series" [chart]="matChartOptions.chart" [xaxis]="matChartOptions.xaxis">
+        </apx-chart>
+        <!-- <img src="../assets/lager.jpeg"> -->
+      </div>
     </div>
+    <div class="col-sm">
+      <div class="chart">
+        <h2>Produktbestand</h2>
+        <apx-chart [series]="prodChartOptions.series" [chart]="prodChartOptions.chart" [xaxis]="prodChartOptions.xaxis">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+  <h2>Auftragsbestand</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Auftrags-ID</th>
+          <th scope="col">Kunden-ID</th>
+          <th scope="col">Waren</th>
+          <th scope="col">Status</th>
+          <th scope="col">Gesamtpreis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders" scope="row">
+          <td>{{order.orderId}}</td>
+          <td>{{order.customerId}}</td>
+          <td>
+            <ul *ngFor="let item of order.items">
+              <li>{{item.number}} x {{item.model}}</li>
+            </ul>
+          </td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalPrice}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<div class="container">
+  <h2>Getätigte Lieferungen</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Auftrags-ID</th>
+          <th scope="col">Kunden-ID</th>
+          <th scope="col">Waren</th>
+          <th scope="col">Status</th>
+          <th scope="col">Gesamtpreis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of ordersDone" scope="row">
+          <td>{{order.orderId}}</td>
+          <td>{{order.customerId}}</td>
+          <td>
+            <ul *ngFor="let item of order.items">
+              <li>{{item.number}} x {{item.model}}</li>
+            </ul>
+          </td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalPrice}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<div class="container">
+  <h2>Aktuelle Gewinn- und Verlustrechung</h2>
+  <p>muss angepasst werden, bin mir nicht sicher was da rein muss</p>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th colspan="2" scope="col">SOLL</th>
+          <th colspan="2" scope="col">HABEN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wareneinsatz für Lagerbestand</td>
+          <td class="table-danger">{{wareneinsatz}} €</td>
+          <td>Erlös aus allen Aufträgen</td>
+          <td class="table-success">{{erloes}} €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
