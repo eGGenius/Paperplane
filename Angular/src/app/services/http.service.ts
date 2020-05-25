@@ -58,11 +58,15 @@ export class HttpService {
         return this.httpClient.put(this.url + 'order/' + orderId, JSON.parse('{"status":"delivered"}'));
     }
 
+    public getAllModels() {
+        return this.httpClient.get(this.url + 'models/all');
+    }
+
     public getAccountBalance() {
         return this.httpClient.get(this.url + 'balance');
     }
 
-    public updateAccountBalance(value: Number) {
-        return this.httpClient.put(this.url + 'balance', JSON.parse('{"value":"' + value + '"}'));
-    }
+    // public updateAccountBalance(value: Number) {
+    //     return this.httpClient.put(this.url + 'balance', JSON.parse('{"value":"' + value + '"}'));
+    // }
 }

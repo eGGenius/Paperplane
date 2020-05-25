@@ -1,7 +1,7 @@
 <div class="ordersOverview-container">
-    
+
     <h2>Auftragsübersicht</h2>
-    
+
     <div class="order-filter-container">
         <p>ToDo: Filtern nach Order-Status</p>
     </div>
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders" scope="row">
+                <tr *ngFor="let order of orders" scope="row" (click)="onShowDetails(order)">
                     <td>{{order.orderId}}</td>
                     <td>{{order.customerId}}</td>
                     <td>

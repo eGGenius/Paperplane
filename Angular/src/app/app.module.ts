@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { MatDialogModule } from '@angular/material/dialog';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HttpService } from './services/http.service';
 import { environment } from 'src/environments/environment';
@@ -13,6 +15,7 @@ import { CustomersComponent } from './views/customers/customers.component';
 import { ModelsComponent } from './views/models/models.component';
 import { ProductsComponent } from './views/products/products.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DetailViewComponent } from './views/detail-view/detail-view.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +25,16 @@ import { HttpClientModule } from '@angular/common/http';
     OrdersComponent,
     CustomersComponent,
     ModelsComponent,
-    ProductsComponent
+    ProductsComponent,
+    DetailViewComponent
+    // BrowserAnimationsModule
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
   providers: [
     HttpService,

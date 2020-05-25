@@ -1,1 +1,11 @@
-<p>These are all paperplane models</p>
+<div class="models-overview-container">
+
+    <h2>Modellübersicht</h2>
+
+    <div class="items-container">
+        <div class="item" *ngFor="let model of models">
+            <img [src]="generateSourcePath(model.identifier)">
+        </div>
+    </div>
+
+</div>

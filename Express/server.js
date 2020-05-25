@@ -111,7 +111,24 @@ app.get(apiPrefix + "/materials/all", function (req, res) {
 });
 
 app.put(apiPrefix + "/materials/:id", function (req, res) {
-    Material.findOneAndUpdate({ materialId: req.params.id }, { $inc: { stock: req.body.number } }, function (err, material) {
+    var number = req.body.number;
+    var id = req.params.id;
+    if (number > 0) {
+
+        var result = 0;
+        Material.findOne({ materialId: id }, function (err, material) {
+            console.log(material);
+            console.log('PricePerUnit: ', material.pricePerUnit);
+            result = (material.pricePerUnit * number * (-1));
+            console.log(result);
+            updateAccountBalance(result);
+
+        });
+
+
+
+    }
+    Material.findOneAndUpdate({ materialId: id }, { $inc: { stock: number } }, function (err, material) {
         if (err) return console.log(err);
         else return res.status(200).send(material);
     });
@@ -157,37 +174,78 @@ app.put(apiPrefix + "/order/:id", function (req, res) {
 
 app.post(apiPrefix + "/order", function (req, res) {
     var items = req.body.items;
+    var totalPrice = function (items) {
+        var totalPrice = 0;
+        items.forEach(item => {
+            Model.find({ identifier: item.model }, function (err, model) {
+                if (err) console.log(err);
+                else totalPrice += model.sellingPrice * item.number;
+            });
+        });
+    }
     Order.create(
         { orderId: uuidv1() },
         { customerId: req.body.customerId },
         { items: items },
         { status: 'progress' },
-        {
-            totalPrice: function (items) {
-                var totalPrice = 0;
-                items.forEach(item => {
-                    Model.find({ identifier: item.model }, function (err, model) {
-                        if (err) console.log(err);
-                        else totalPrice += model.sellingPrice * item.number;
-                    });
-                });
-            }
-        }, function (err) {
+        { totalPrice: totalPrice },
+        function (err) {
             if (err) console.log(err);
             else res.status(200);
         });
 });
 
-app.get(apiPrefix + "/balance", function (req, res) {
-    Account.findOne({ identifier: "main-account" }, function (err, account) {
-        if (err) return console.log(err);
-        else res.status(200).send(account);
-    })
+app.get(apiPrefix + "/models/:query", function (req, res) {
+    switch (req.params.query) {
+        case 'all':
+            Model.find(function (err, models) {
+                if (err) console.log(err);
+                else res.status(200).send(models);
+            });
+            break;
+    }
 });
 
-app.put(apiPrefix + "/balance", function (req, res) {
-    Account.findOneAndUpdate({ identifier: "main-account" }, { $inc: { balance: req.body.value } }, function (err, balance) {
+app.get(apiPrefix + "/balance", function (req, res) {
+    Account.findOne({ identifier: 'main-account' }, function (err, account) {
         if (err) return console.log(err);
-        else res.status(200).send(balance);
+        else res.status(200).send(account);
     });
+});
+
+// app.put(apiPrefix + "/balance", function (req, res) {
+//     Account.findOneAndUpdate({ identifier: "main-account" }, { $inc: { balance: req.body.value } }, function (err, balance) {
+//         if (err) return console.log(err);
+//         else res.status(200).send(balance);
+//     });
+// });
+
+function updateAccountBalance(value) {
+    var query = 'main-account';
+    Account.findOneAndUpdate({ identifier: query }, { $inc: { balance: value } }, function (err, account) {
+        if (err) return console.log(err);
+        else console.log(account);
+    });
+}
+
+app.get(apiPrefix + '/image/:model', function (req, res) {
+    var path = './assets/images/' + req.params.model;
+    if (fs.existsSync(path)) {
+        fs.readFile(path, function (err, file) {
+            if (err) return console.log(err);
+            else {
+                res.contentType("image/jpeg");
+                res.send(file);
+            }
+        });
+    }
+    else {
+        fs.readFile('./assets/images/default.png', function (err, file) {
+            if (err) return console.log(err);
+            else {
+                res.contentType("image/png");
+                res.send(file);
+            }
+        });
+    }
 });
