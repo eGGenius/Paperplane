@@ -17,18 +17,18 @@ export class ModelsComponent implements OnInit {
   constructor(private http: HttpService, private domSanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    this.http.getAllModels().subscribe((data) => {
-      data = this.models;
+    this.http.getAllModels().subscribe((data: Model[]) => {
+      this.models = data;
     });
   }
 
   generateSourcePath(input: String) {
     var splitInput = input.split(/ |-/);
-    let result: string = "url('" + this.backendApi + "image/";
+    let result: string = this.backendApi + "image/";
     for (let i = 0; i < splitInput.length; i++) {
       result += splitInput[i];
     }
-    result += ".jpg')";
-    return this.domSanitizer.bypassSecurityTrustStyle(result);
+    result += ".jpg";
+    return this.domSanitizer.bypassSecurityTrustUrl(result);
   }
 }

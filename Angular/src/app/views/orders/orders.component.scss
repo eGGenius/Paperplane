@@ -1,7 +1,10 @@
-.ordersOverview-container {
+.ordersOverview-container, .createOrder-container {
     border: 1px solid black;
     padding: 1rem;
     border-radius: 1rem;
 
 }
 
+.createOrder-container {
+    margin-top: 1rem;
+}

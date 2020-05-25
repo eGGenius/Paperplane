@@ -27,7 +27,7 @@ import { DetailViewComponent } from './views/detail-view/detail-view.component';
     CustomersComponent,
     ModelsComponent,
     ProductsComponent,
-    DetailViewComponent
+    DetailViewComponent,
     // BrowserAnimationsModule
   ],
   imports: [
@@ -35,11 +35,11 @@ import { DetailViewComponent } from './views/detail-view/detail-view.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-<<<<<<< HEAD
-    MatDialogModule
-=======
+    MatDialogModule,
     NgApexchartsModule
->>>>>>> a96d4109fb8afb077131dbfbe1c6774cfaedbf07
+  ],
+  entryComponents: [
+    DetailViewComponent
   ],
   providers: [
     HttpService,

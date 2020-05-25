@@ -1,3 +1,22 @@
+<div class="container">
+  <h2>Aktuelle Gewinn- und Verlustrechung</h2>
+
+  <div class="guv-display-container">
+
+    <div class="guv-display-positive" *ngIf="positive">
+      <h3 class="amount">{{ amount }}</h3>
+    </div>
+    <div class="guv-display-neutral" *ngIf="neutral">
+      <h3 class="amount">{{ amount }}</h3>
+    </div>
+    <div class="guv-display-negative" *ngIf="negative">
+      <h3 class="amount">{{ amount }}</h3>
+    </div>
+
+  </div>
+
+</div>
+<br>
 <div>
   <div class="row">
     <div class="col-sm">
@@ -41,7 +60,7 @@
             </ul>
           </td>
           <td>{{order.status}}</td>
-          <td>{{order.totalPrice}}</td>
+          <td class="amount">{{order.totalPrice}}</td>
         </tr>
       </tbody>
     </table>
@@ -71,30 +90,7 @@
             </ul>
           </td>
           <td>{{order.status}}</td>
-          <td>{{order.totalPrice}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<br>
-<div class="container">
-  <h2>Aktuelle Gewinn- und Verlustrechung</h2>
-  <p>muss angepasst werden, bin mir nicht sicher was da rein muss</p>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-light">
-        <tr>
-          <th colspan="2" scope="col">SOLL</th>
-          <th colspan="2" scope="col">HABEN</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Wareneinsatz für Lagerbestand</td>
-          <td class="table-danger">{{wareneinsatz}} €</td>
-          <td>Erlös aus allen Aufträgen</td>
-          <td class="table-success">{{erloes}} €</td>
+          <td class="amount">{{order.totalPrice}}</td>
         </tr>
       </tbody>
     </table>

@@ -6,12 +6,26 @@
 
 .items-container {
     display: inline-flex;
-    height: 500px;
-    width: 500px;
+    height: auto;
+    width: auto;
 }
 
 .item {
-    border-radius: 3px;
-    width: 100px;
-    height: 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #ECF0F3;
+    margin-right: 20px;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.preview {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.identifier {
+    margin-top: 15px;
+    text-align: center;
 }

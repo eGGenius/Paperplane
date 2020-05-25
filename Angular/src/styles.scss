@@ -1,5 +1,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+.amount::after {
+    content:" EUR";
+}
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

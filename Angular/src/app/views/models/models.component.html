@@ -1,10 +1,12 @@
-<div class="models-overview-container">
+<div class="models-overview-container unselectable">
 
     <h2>Modellübersicht</h2>
 
     <div class="items-container">
         <div class="item" *ngFor="let model of models">
-            <img [src]="generateSourcePath(model.identifier)">
+            <h6 class="identifier">{{model.identifier}}</h6>
+            <img [src]="generateSourcePath(model.identifier)" class="preview">
+
         </div>
     </div>
 

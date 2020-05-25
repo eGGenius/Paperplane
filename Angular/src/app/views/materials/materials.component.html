@@ -34,7 +34,8 @@
             <select class="form-control" name="materialId" ngModel required>
                 <!-- <option [value]=''>Material wählen...</option> -->
                 <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
-                <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.identifier}}</option>
+                <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.identifier}}
+                </option>
             </select>
         </div>
 

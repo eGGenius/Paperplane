@@ -4,6 +4,7 @@ import { Order } from 'src/assets/interfaces/Order';
 import { Material } from 'src/assets/interfaces/Material';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailViewComponent } from '../detail-view/detail-view.component';
+import { Customer } from 'src/assets/interfaces/Customer';
 
 @Component({
   selector: 'app-orders',
@@ -13,40 +14,30 @@ import { DetailViewComponent } from '../detail-view/detail-view.component';
 export class OrdersComponent implements OnInit {
 
   orders: Order[];
+  customers: Customer[];
 
   constructor(public dialog: MatDialog, private http: HttpService) { }
 
   ngOnInit(): void {
     this.http.getAllOrders().subscribe((data: Order[]) => {
-      this.orders = data;  
-        // Folgende Funktion filtert alle Aufträge die den Status "progress" und "delivery" haben
-        // kann für eine Frontend Filterung so übernommen werden
-        
+      this.orders = data;
+      // Folgende Funktion filtert alle Aufträge die den Status "progress" und "delivery" haben
+      // kann für eine Frontend Filterung so übernommen werden
+
       let filters = {
-        status: ["progress", "delivery"]
+        status: ["progress", "delivered"]
       }
       this.orders = this.orders.filter(({
         status
       }) => filters.status.some(n => status.includes(n)));
     });
+    this.http.getAllCustomers().subscribe((data: Customer[]) => {
+      this.customers = data;
+    });
   }
 
   onShowDetails(data: Material) {
-    const detailDialogRef = this.dialog.open(DetailViewComponent, {
-      data: {}
-    });
 
-    // detailDialogRef.afterClosed().subscribe(result => {
-    //   if (result != null) {
-    //     if (!this.filters.includes(result)) {
-    //       this.http.postFilter(result).subscribe(() => {
-    //         this.http.getFilters().subscribe((data: { identifier: string }[]) => {
-    //           this.filters = data;
-    //         });
-    //       });
-    //     }
-    //   }
-    // });
   }
 }
 

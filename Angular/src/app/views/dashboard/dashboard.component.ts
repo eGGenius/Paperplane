@@ -1,35 +1,11 @@
-import {
-  Component,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  HttpService
-} from 'src/app/services/http.service';
-import {
-  Model
-} from 'src/assets/interfaces/Model';
-import {
-  ChartComponent,
-  ApexAxisChartSeries
-} from "ng-apexcharts";
-import {
-  Material
-} from 'src/assets/interfaces/Material';
-
-import {
-  ApexNonAxisChartSeries,
-  ApexTitleSubtitle,
-  ApexXAxis,
-  ApexResponsive,
-  ApexChart
-} from "ng-apexcharts";
-import {
-  ProductsComponent
-} from '../products/products.component';
-import {
-  Order
-} from 'src/assets/interfaces/Order';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpService } from 'src/app/services/http.service';
+import { Model } from 'src/assets/interfaces/Model';
+import { ChartComponent, ApexAxisChartSeries } from "ng-apexcharts";
+import { Material } from 'src/assets/interfaces/Material';
+import { ApexTitleSubtitle, ApexXAxis, ApexResponsive, ApexChart } from "ng-apexcharts";
+import { Order } from 'src/assets/interfaces/Order';
+import { Account } from 'src/assets/interfaces/Account';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -44,36 +20,40 @@ export type ChartOptions = {
 })
 export class DashboardComponent {
   @ViewChild("chart") chart: ChartComponent;
-  public chartOptions: Partial < ChartOptions > ;
+  public chartOptions: Partial<ChartOptions>;
 
   materialStock: any;
   productStock: any;
   matChartOptions: {
     series: {
-      name: string;data: number[];
-    } [];chart: {
-      height: number;type: string;
-    };title: {
+      name: string; data: number[];
+    }[]; chart: {
+      height: number; type: string;
+    }; title: {
       text: string;
-    };xaxis: {
+    }; xaxis: {
       categories: number[];
     };
   };
   prodChartOptions: {
     series: {
-      name: string;data: number[];
-    } [];chart: {
-      height: number;type: string;
-    };title: {
+      name: string; data: number[];
+    }[]; chart: {
+      height: number; type: string;
+    }; title: {
       text: string;
-    };xaxis: {
+    }; xaxis: {
       categories: number[];
     };
   };
-  orders: Order[];
-  ordersDone: Order[];
+  orders: Order[] = [];
+  ordersDone: Order[] = [];
   wareneinsatz: number = 0;
-  erloes: any;
+  amount: any;
+
+  positive: Boolean = false;
+  neutral: Boolean = false;
+  negative: Boolean = false;
 
 
   constructor(private http: HttpService) {
@@ -87,6 +67,41 @@ export class DashboardComponent {
         mat_names[i] = this.materialStock[i].materialId;
         this.wareneinsatz = this.wareneinsatz + this.materialStock[i].stock * this.materialStock[i].pricePerUnit;
       }
+
+      this.http.getAccountBalance().subscribe((data: Account) => {
+        if (data.balance > 0) {
+          this.positive = true;
+          this.neutral = false;
+          this.negative = false;
+        }
+        else if (data.balance === 0) {
+          this.positive = false;
+          this.neutral = true;
+          this.negative = false;
+        }
+        else if (data.balance < 0) {
+          this.positive = false;
+          this.neutral = false;
+          this.negative = true;
+        }
+        this.amount = Number(data.balance).toLocaleString('de');
+      });
+
+      this.http.getAllOrders().subscribe((data: Order[]) => {
+        data.forEach(order => {
+          switch (order.status) {
+            case 'progress':
+              this.orders.push(order);
+              break;
+            case 'done':
+              this.orders.push(order);
+              break;
+            case 'delivered':
+              this.ordersDone.push(order);
+              break;
+          }
+        });
+      });
 
       this.http.getAllProductStock().subscribe((data: Model[]) => {
         this.productStock = data;
@@ -133,30 +148,6 @@ export class DashboardComponent {
             categories: prod_names
           }
         };
-        // let filters = {status: ["delivered"]};
-        this.http.getAllOrders().subscribe((data: Order[]) => {
-          this.orders = data;
-          this.erloes = 0;
-          for (var i = 0; i < Object.keys(this.orders).length; i++) {
-            this.erloes = this.erloes + this.orders[i].totalPrice;
-          }
-          let filters1 = {
-            status: ["progress", "delivery"]
-          }
-          this.orders = this.orders.filter(({
-            status
-          }) => filters1.status.some(n => status.includes(n)));
-
-          this.ordersDone = data;
-          let filters2 = {
-            status: ["delivered"]
-          }
-          this.ordersDone = this.ordersDone.filter(({
-            status
-          }) => filters2.status.some(n => status.includes(n)));
-
-
-        });
       });
     });
   }

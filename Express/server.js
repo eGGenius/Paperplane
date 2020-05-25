@@ -9,7 +9,7 @@ const app = express();
 const serverPort = '8100';
 const apiPrefix = '/api';
 
-const defaultCollections = ['materials', 'customers', 'orders', 'models', 'account'];
+const defaultCollections = ['materials', 'customers', 'orders', 'models', 'accounts'];
 
 mongoose.connect('mongodb://localhost:27017/paperplane', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true });
 
@@ -207,22 +207,15 @@ app.get(apiPrefix + "/models/:query", function (req, res) {
 });
 
 app.get(apiPrefix + "/balance", function (req, res) {
-    Account.findOne({ identifier: 'main-account' }, function (err, account) {
-        if (err) return console.log(err);
+    var query = 'main-account';
+    Account.findOne({ identifier: query }, function (err, account) {
+        if (err) console.log(err);
         else res.status(200).send(account);
     });
 });
 
-// app.put(apiPrefix + "/balance", function (req, res) {
-//     Account.findOneAndUpdate({ identifier: "main-account" }, { $inc: { balance: req.body.value } }, function (err, balance) {
-//         if (err) return console.log(err);
-//         else res.status(200).send(balance);
-//     });
-// });
-
 function updateAccountBalance(value) {
-    var query = 'main-account';
-    Account.findOneAndUpdate({ identifier: query }, { $inc: { balance: value } }, function (err, account) {
+    Account.findOneAndUpdate({ identifier: 'main-account' }, { $inc: { balance: value } }, function (err, account) {
         if (err) return console.log(err);
         else console.log(account);
     });

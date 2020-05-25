@@ -15,3 +15,28 @@
     border-radius: 1rem;
 
 }
+
+.guv-display-container {
+    height: 45px;
+    width: auto;
+}
+
+.guv-display-positive, .guv-display-neutral, .guv-display-negative {
+    border: 1px solid black;
+    border-radius: 2px;
+    text-align: center;
+    width: 200px;
+    height: 100%;
+}
+
+.guv-display-positive {
+    background-color: #AAFF76;
+}
+
+.guv-display-neutral {
+    background-color: whitesmoke;
+}
+
+.guv-display-negative {
+background-color: #FF7676;
+}
