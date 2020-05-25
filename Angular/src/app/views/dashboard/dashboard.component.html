@@ -1,34 +1,56 @@
-<div class="container">
-    <div class="row">
-      <div class="col-sm">
-        <div class="chart">
-            <h2>Materialbestand</h2>
-            <apx-chart
-              [series]="chartOptions.series"
-              [chart]="chartOptions.chart"
-              [xaxis]="chartOptions.xaxis"
-            ></apx-chart>
-          </div>
+<div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="chart">
+        <p>Materialbestand</p>
+        <apx-chart [series]="matChartOptions.series" [chart]="matChartOptions.chart" [xaxis]="matChartOptions.xaxis">
+        </apx-chart>
       </div>
-      <div class="col-sm">
-        <div class="chart">
-            <h2 style="text-align: center;">Materialbestand</h2>
-            <apx-chart
-              [series]="chartOptions.series"
-              [chart]="chartOptions.chart"
-              [xaxis]="chartOptions.xaxis"
-            ></apx-chart>
-          </div>
-      </div>
-      <div class="col-sm">
-        <div class="chart">
-            <h2>Materialbestand</h2>
-            <apx-chart
-              [series]="chartOptions.series"
-              [chart]="chartOptions.chart"
-              [xaxis]="chartOptions.xaxis"
-            ></apx-chart>
-          </div>
+    </div>
+    <div class="col-sm">
+      <div class="chart">
+        <p>Produktbestand</p>
+        <apx-chart [series]="prodChartOptions.series" [chart]="prodChartOptions.chart" [xaxis]="prodChartOptions.xaxis">
+        </apx-chart>
       </div>
     </div>
   </div>
+</div>
+<br>
+<div class="container">
+  <p>Auftragsbestand</p>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Auftrags-ID</th>
+          <th scope="col">Kunden-ID</th>
+          <th scope="col">Waren</th>
+          <th scope="col">Status</th>
+          <th scope="col">Gesamtpreis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders" scope="row">
+          <td>{{order.orderId}}</td>
+          <td>{{order.customerId}}</td>
+          <td>
+            <ul *ngFor="let item of order.items">
+              <li>{{item.number}} x {{item.model}}</li>
+            </ul>
+          </td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalPrice}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<div class="container">
+  Getätigte Lieferungen
+</div>
+<br>
+<div class="container">
+  Aktuelle Gewinn- und Verlustrechung
+</div>
