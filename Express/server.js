@@ -50,7 +50,7 @@ var customerSchema = new mongoose.Schema({
 var orderSchema = new mongoose.Schema({
     orderId: String,
     customerId: String,
-    items: [{ model: String, number: Number }],
+    items: [{ identifier: String, number: Number }],
     status: String,
     totalPrice: Number
 });
@@ -73,7 +73,8 @@ var Order = mongoose.model('Order', orderSchema);
 var Model = mongoose.model('Model', modelSchema);
 var Account = mongoose.model('Account', accountSchema);
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
@@ -172,17 +173,25 @@ app.put(apiPrefix + "/order/:id", function (req, res) {
     });
 });
 
+function getTotalPrice(items) {
+    let totalPrice = 0;
+    items.forEach(item => {
+        Model.find({ identifier: item.identifier }, function (err, model) {
+            if (err) console.log(err);
+            else {
+                console.log(model, model.sellingPrice, typeof (model.sellingPrice), item.number, typeof (item.number));
+                totalPrice += (model.sellingPrice * item.number);
+            }
+        });
+    });
+    console.log('Total price is ', totalPrice);
+    return totalPrice;
+}
+
 app.post(apiPrefix + "/order", function (req, res) {
     var items = req.body.items;
-    var totalPrice = function (items) {
-        var totalPrice = 0;
-        items.forEach(item => {
-            Model.find({ identifier: item.model }, function (err, model) {
-                if (err) console.log(err);
-                else totalPrice += model.sellingPrice * item.number;
-            });
-        });
-    }
+    console.log(items);
+    var totalPrice = getTotalPrice(items);
     Order.create(
         { orderId: uuidv1() },
         { customerId: req.body.customerId },

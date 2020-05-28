@@ -5,6 +5,9 @@ import { Material } from 'src/assets/interfaces/Material';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailViewComponent } from '../detail-view/detail-view.component';
 import { Customer } from 'src/assets/interfaces/Customer';
+import { CartItem } from 'src/assets/interfaces/CartItem';
+import { Model } from 'src/assets/interfaces/Model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-orders',
@@ -14,9 +17,14 @@ import { Customer } from 'src/assets/interfaces/Customer';
 export class OrdersComponent implements OnInit {
 
   orders: Order[];
+  shoppingCart: CartItem[] = [];
   customers: Customer[];
+  models: Model[];
 
-  constructor(public dialog: MatDialog, private http: HttpService) { }
+  sourceUrl: any;
+  backendApi: string = 'http://localhost:8100/api/';
+
+  constructor(private http: HttpService, private domSanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.http.getAllOrders().subscribe((data: Order[]) => {
@@ -24,20 +32,66 @@ export class OrdersComponent implements OnInit {
       // Folgende Funktion filtert alle Aufträge die den Status "progress" und "delivery" haben
       // kann für eine Frontend Filterung so übernommen werden
 
-      let filters = {
-        status: ["progress", "delivered"]
-      }
-      this.orders = this.orders.filter(({
-        status
-      }) => filters.status.some(n => status.includes(n)));
+      // let filters = {
+      //   status: ["progress", "delivered"]
+      // }
+      // this.orders = this.orders.filter(({
+      //   status
+      // }) => filters.status.some(n => status.includes(n)));
     });
     this.http.getAllCustomers().subscribe((data: Customer[]) => {
       this.customers = data;
     });
+    this.http.getAllModels().subscribe((data: Model[]) => {
+      this.models = data;
+    });
   }
 
-  onShowDetails(data: Material) {
+  onUpdateOrderToProgress(orderId: string) {
+    this.http.updateOrderToProgress(orderId).subscribe(data => {
+      this.http.getAllOrders().subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    });
+  }
 
+  onUpdateOrderToDone(orderId: string) {
+    this.http.updateOrderToDone(orderId).subscribe(data => {
+      this.http.getAllOrders().subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    });
+  }
+
+  onUpdateOrderToDelivered(orderId: string) {
+    this.http.UpdateOrderToDelivered(orderId).subscribe(data => {
+      this.http.getAllOrders().subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    });
+  }
+
+  onAddToShoppingCart(item: CartItem) {
+    this.shoppingCart.push(item);
+  }
+
+  onSubmit(data: any) {
+    this.http.createNewOrder(data.customerId, this.shoppingCart).subscribe(data => {
+      this.shoppingCart = [];
+      this.http.getAllOrders().subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    });
+  }
+
+  generateSourcePath(input: String) {
+    var splitInput = input.split(/ |-/);
+    let result: string = this.backendApi + "image/";
+    for (let i = 0; i < splitInput.length; i++) {
+      result += splitInput[i];
+    }
+    result += ".jpg";
+    return this.domSanitizer.bypassSecurityTrustUrl(result);
   }
 }
 

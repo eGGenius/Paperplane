@@ -8,3 +8,61 @@
 .createOrder-container {
     margin-top: 1rem;
 }
+
+.status-button-container {
+    width: 150px;
+    display: inline-flex;
+}
+
+.icon {
+    width: 30px;
+}
+
+.btn-circle.btn-md {
+    background-color: #7182FF;
+    width: 50px; 
+    height: 50px;
+    padding: 7px 10px; 
+    border-radius: 25px; 
+    font-size: 10px; 
+    text-align: center; 
+}
+
+.createNewOrder-container {
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+.shopping-cart-display {
+    margin-top: 20px;
+    display: inline-flex;
+    height: 250px;
+}
+
+.item {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #ECF0F3;
+    margin-right: 20px;
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+}
+
+.preview {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.identifier {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.number {
+    position: relative;
+    right: 0;
+    bottom: 0;
+}

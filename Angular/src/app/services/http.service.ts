@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
+import { CartItem } from 'src/assets/interfaces/CartItem';
 
 @Injectable()
 export class HttpService {
@@ -30,7 +31,8 @@ export class HttpService {
         return this.httpClient.put(this.url + 'products/' + model, JSON.parse('{"number":"' + number + '"}'));
     }
 
-    public createNewOrder(customerId: String, items: [{ model: String, number: Number }]) {
+    public createNewOrder(customerId: String, items: CartItem[]) {
+        console.log(items);
         return this.httpClient.post(this.url + 'order', JSON.parse('{"customerId":"' + customerId + '","items":"' + items + '"}'));
     }
 
@@ -48,6 +50,10 @@ export class HttpService {
 
     public getAllOrdersInDelivery() {
         return this.httpClient.get(this.url + 'orders/delivery');
+    }
+
+    public updateOrderToProgress(orderId: string) {
+        return this.httpClient.put(this.url + 'order/' + orderId, JSON.parse('{"status":"progress"}'));
     }
 
     public updateOrderToDone(orderId: String) {

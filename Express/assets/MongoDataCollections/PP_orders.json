@@ -1,5 +1,5 @@
-{"orderId": "pp-o001","customerId": "pp-c001","items": [{"model": "Europaper Premium","number": 5},{"model": "Paperstar 1000","number":10}],"status": "delivered","totalPrice": 73.5}
-{"orderId": "pp-o002","customerId": "pp-c003","items": [{"model": "Europaper","number": 5}],"status": "progress","totalPrice": 34.5}
-{"orderId": "pp-o003","customerId": "pp-c003","items": [{"model": "Europaper","number": 5}],"status": "delivered","totalPrice": 34.5}
-{"orderId": "pp-o004","customerId": "pp-c003","items": [{"model": "Europaper","number": 5}],"status": "progress","totalPrice": 34.5}
-{"orderId": "pp-o005","customerId": "pp-c011","items": [{"model": "Europaper","number": 5}],"status": "done","totalPrice": 34.5}
+{"orderId": "pp-o001","customerId": "pp-c001","items": [{"identifier": "Europaper Premium","number": 5},{"identifier": "Paperstar 1000","number":10}],"status": "delivered","totalPrice": 73.5}
+{"orderId": "pp-o002","customerId": "pp-c003","items": [{"identifier": "Europaper","number": 5}],"status": "progress","totalPrice": 34.5}
+{"orderId": "pp-o003","customerId": "pp-c003","items": [{"identifier": "Europaper","number": 5}],"status": "delivered","totalPrice": 34.5}
+{"orderId": "pp-o004","customerId": "pp-c003","items": [{"identifier": "Europaper","number": 5}],"status": "progress","totalPrice": 34.5}
+{"orderId": "pp-o005","customerId": "pp-c011","items": [{"identifier": "Europaper","number": 5}],"status": "done","totalPrice": 34.5}
