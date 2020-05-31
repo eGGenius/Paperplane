@@ -47,28 +47,35 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  onUpdateOrderToProgress(orderId: string) {
-    this.http.updateOrderToProgress(orderId).subscribe(data => {
-      this.http.getAllOrders().subscribe((data: Order[]) => {
-        this.orders = data;
+  onUpdateOrderToProgress(order: Order) {
+    if (order.status !== 'progress') {
+      this.http.updateOrderToProgress(order.orderId).subscribe(data => {
+        this.http.getAllOrders().subscribe((data: Order[]) => {
+          this.orders = data;
+        });
       });
-    });
+    }
+
   }
 
-  onUpdateOrderToDone(orderId: string) {
-    this.http.updateOrderToDone(orderId).subscribe(data => {
-      this.http.getAllOrders().subscribe((data: Order[]) => {
-        this.orders = data;
+  onUpdateOrderToDone(order: Order) {
+    if (order.status !== 'done') {
+      this.http.updateOrderToDone(order.orderId).subscribe(data => {
+        this.http.getAllOrders().subscribe((data: Order[]) => {
+          this.orders = data;
+        });
       });
-    });
+    }
   }
 
-  onUpdateOrderToDelivered(orderId: string) {
-    this.http.UpdateOrderToDelivered(orderId).subscribe(data => {
-      this.http.getAllOrders().subscribe((data: Order[]) => {
-        this.orders = data;
+  onUpdateOrderToDelivered(order: Order) {
+    if (order.status !== 'delivered') {
+      this.http.UpdateOrderToDelivered(order.orderId).subscribe(data => {
+        this.http.getAllOrders().subscribe((data: Order[]) => {
+          this.orders = data;
+        });
       });
-    });
+    }
   }
 
   onAddToShoppingCart(item: CartItem) {

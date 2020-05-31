@@ -32,8 +32,12 @@ export class HttpService {
     }
 
     public createNewOrder(customerId: String, items: CartItem[]) {
-        console.log(items);
-        return this.httpClient.post(this.url + 'order', JSON.parse('{"customerId":"' + customerId + '","items":"' + items + '"}'));
+        let itemsAsString = '[';
+        for (let i = 0; i < items.length - 1; i++) {
+            itemsAsString += '{"identifier":"' + items[i].identifier + '","number":' + items[i].number + '},';
+        }
+        itemsAsString += '{"identifier":"' + items[items.length - 1].identifier + '","number":' + items[items.length - 1].number + '}]';
+        return this.httpClient.post(this.url + 'order', JSON.parse('{"customerId":"' + customerId + '","items":' + itemsAsString + '}'));
     }
 
     public getAllOrders() {
@@ -52,7 +56,7 @@ export class HttpService {
         return this.httpClient.get(this.url + 'orders/delivery');
     }
 
-    public updateOrderToProgress(orderId: string) {
+    public updateOrderToProgress(orderId: String) {
         return this.httpClient.put(this.url + 'order/' + orderId, JSON.parse('{"status":"progress"}'));
     }
 
@@ -71,8 +75,4 @@ export class HttpService {
     public getAccountBalance() {
         return this.httpClient.get(this.url + 'balance');
     }
-
-    // public updateAccountBalance(value: Number) {
-    //     return this.httpClient.put(this.url + 'balance', JSON.parse('{"value":"' + value + '"}'));
-    // }
 }

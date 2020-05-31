@@ -73,7 +73,7 @@ var Order = mongoose.model('Order', orderSchema);
 var Model = mongoose.model('Model', modelSchema);
 var Account = mongoose.model('Account', accountSchema);
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -142,12 +142,12 @@ app.get(apiPrefix + "/products/all", function (req, res) {
     });
 });
 
-app.put(apiPrefix + "/products/:model", function (req, res) {
-    Model.findOneAndUpdate({ identifier: req.params.model }, { $inc: { stock: req.body.number } }, function (err, model) {
-        if (err) return console.log(err);
-        else return res.status(200).send(model);
-    });
-});
+// app.put(apiPrefix + "/products/:model", function (req, res) {
+//     Model.findOneAndUpdate({ identifier: req.params.model }, { $inc: { stock: req.body.number } }, function (err, model) {
+//         if (err) return console.log(err);
+//         else return res.status(200).send(model);
+//     });
+// });
 
 app.get(apiPrefix + "/orders/:status", function (req, res) {
     switch (req.params.status) {
@@ -167,19 +167,63 @@ app.get(apiPrefix + "/orders/:status", function (req, res) {
 });
 
 app.put(apiPrefix + "/order/:id", function (req, res) {
-    Order.findOneAndUpdate({ orderId: req.params.id }, { $set: { status: req.body.status } }, function (err, order) {
+    var status = req.body.status;
+    Order.findOneAndUpdate({ orderId: req.params.id }, { $set: { status: status } }, function (err, order) {
         if (err) return console.log(err);
-        else res.status(200).send(order);
+        else {
+            switch (status) {
+                case 'progress':
+                    order.items.forEach(item => {
+                        updateProductStock(item.identifier, (item.number * (-1)));
+                    });
+                    break;
+                case 'done':
+                    order.items.forEach(item => {
+                        updateProductStock(item.identifier, item.number);
+                    });
+                    break;
+                case 'delivered':
+                    order.items.forEach(item => {
+                        updateProductStock(item.identifier, (item.number * (-1)));
+                    });
+                    updateAccountBalance(order.totalPrice);
+                    break;
+
+            }
+            res.status(200).send(order);
+        }
+    });
+});
+
+function updateProductStock(model, number) {
+    Model.findOneAndUpdate({ identifier: model }, { $inc: { stock: number } }, function (err, model) {
+        if (err) return console.log(err);
+    });
+}
+
+app.post(apiPrefix + "/order", function (req, res) {
+    var items = req.body.items;
+
+    console.log('Ordered items: ', items);
+
+    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: getTotalPrice(items) });
+
+    newOrder.save(function (err, result) {
+        if (err) console.log(err);
+        else res.send(result);
     });
 });
 
 function getTotalPrice(items) {
+    console.log('Get total price for items: ', items);
     let totalPrice = 0;
     items.forEach(item => {
         Model.find({ identifier: item.identifier }, function (err, model) {
             if (err) console.log(err);
             else {
-                console.log(model, model.sellingPrice, typeof (model.sellingPrice), item.number, typeof (item.number));
+                console.log('Model found: ', model);
+                console.log('Amount to be purchased: ', item.number);
+                console.log('Position sum is: ', ((Number(model.sellingPrice)) * (Number(item.number))));
                 totalPrice += (model.sellingPrice * item.number);
             }
         });
@@ -187,22 +231,6 @@ function getTotalPrice(items) {
     console.log('Total price is ', totalPrice);
     return totalPrice;
 }
-
-app.post(apiPrefix + "/order", function (req, res) {
-    var items = req.body.items;
-    console.log(items);
-    var totalPrice = getTotalPrice(items);
-    Order.create(
-        { orderId: uuidv1() },
-        { customerId: req.body.customerId },
-        { items: items },
-        { status: 'progress' },
-        { totalPrice: totalPrice },
-        function (err) {
-            if (err) console.log(err);
-            else res.status(200);
-        });
-});
 
 app.get(apiPrefix + "/models/:query", function (req, res) {
     switch (req.params.query) {
