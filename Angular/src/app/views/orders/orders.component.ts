@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { Order } from 'src/assets/interfaces/Order';
-import { Material } from 'src/assets/interfaces/Material';
-import { MatDialog } from '@angular/material/dialog';
-import { DetailViewComponent } from '../detail-view/detail-view.component';
 import { Customer } from 'src/assets/interfaces/Customer';
 import { CartItem } from 'src/assets/interfaces/CartItem';
 import { Model } from 'src/assets/interfaces/Model';
@@ -29,15 +26,6 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.http.getAllOrders().subscribe((data: Order[]) => {
       this.orders = data;
-      // Folgende Funktion filtert alle Aufträge die den Status "progress" und "delivery" haben
-      // kann für eine Frontend Filterung so übernommen werden
-
-      // let filters = {
-      //   status: ["progress", "delivered"]
-      // }
-      // this.orders = this.orders.filter(({
-      //   status
-      // }) => filters.status.some(n => status.includes(n)));
     });
     this.http.getAllCustomers().subscribe((data: Customer[]) => {
       this.customers = data;

@@ -203,33 +203,45 @@ function updateProductStock(model, number) {
 
 app.post(apiPrefix + "/order", function (req, res) {
     var items = req.body.items;
+    var itemsRes = [];
 
     console.log('Ordered items: ', items);
 
-    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: getTotalPrice(items) });
+    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, status: 'progress', totalPrice: getTotalPrice(items) });
 
+    for (let i = 0; i < items.length; i++) {
+        itemsRes.push('{"_id":"' + mongoose.Types.ObjectId() + '","identifier":"' + items[i].identifier + '","number":' + items[i].number + '}');
+
+    }
+
+    // newOrder.items.push(itemsRes);
     newOrder.save(function (err, result) {
         if (err) console.log(err);
         else res.send(result);
     });
 });
 
-function getTotalPrice(items) {
-    console.log('Get total price for items: ', items);
-    let totalPrice = 0;
-    items.forEach(item => {
-        Model.find({ identifier: item.identifier }, function (err, model) {
+async function getTotalPrice(items) {
+    var totalPrice = 0;
+    for (let i = 0; i < items.length; i++) {
+        await Model.find({ identifier: items[i].identifier }, function (err, model) {
             if (err) console.log(err);
             else {
-                console.log('Model found: ', model);
-                console.log('Amount to be purchased: ', item.number);
-                console.log('Position sum is: ', ((Number(model.sellingPrice)) * (Number(item.number))));
-                totalPrice += (model.sellingPrice * item.number);
+                totalPrice += (model[0].sellingPrice * items[i].number);
+                model[0].materials.forEach(material => {
+                    updateMaterialStock(material.materialId, (material.number * (-1)));
+                });
             }
         });
-    });
-    console.log('Total price is ', totalPrice);
+    }
+    console.log('Total price: ', totalPrice);
     return totalPrice;
+}
+
+function updateMaterialStock(identifier, number) {
+    Material.findOneAndUpdate({ identifier: identifier }, { $inc: { stock: number } }, function (err, material) {
+        if (err) return console.log(err);
+    });
 }
 
 app.get(apiPrefix + "/models/:query", function (req, res) {
