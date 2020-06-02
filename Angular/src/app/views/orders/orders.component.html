@@ -23,10 +23,11 @@
                     <td>{{order.customerId}}</td>
                     <td>
                         <ul *ngFor="let item of order.items">
-                            <li>{{item.number}} x {{item.model}}</li>
+                            <li>{{item.number}} x {{item.identifier}}</li>
                         </ul>
                     </td>
-                    <td>{{order.status}}</td>
+                    <td>{{order.status}}
+                    </td>
                     <td class="amount">{{order.totalPrice}}</td>
                     <td>
                         <div class="status-button-container">

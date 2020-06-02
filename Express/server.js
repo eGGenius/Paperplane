@@ -207,7 +207,7 @@ app.post(apiPrefix + "/order", function (req, res) {
 
     console.log('Ordered items: ', items);
 
-    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, status: 'progress', totalPrice: getTotalPrice(items) });
+    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, status: 'progress', totalPrice: Promise.resolve(Number.parseFloat(getTotalPrice(items))) });
 
     for (let i = 0; i < items.length; i++) {
         itemsRes.push('{"_id":"' + mongoose.Types.ObjectId() + '","identifier":"' + items[i].identifier + '","number":' + items[i].number + '}');
