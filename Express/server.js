@@ -203,46 +203,33 @@ function updateProductStock(model, number) {
 
 app.post(apiPrefix + "/order", function (req, res) {
     var items = req.body.items;
-    var itemsRes = [];
 
-    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: getTotalPrice(items) });
-
-    newOrder.save(function (err, result) {
-        if (err) console.log(err);
-        else res.send(result);
-    });
-});
-
-function getTotalPrice(items) {
-    console.log('get Total price...')
-    let totalPrice = 0;
-    items.forEach((item) => {
-            Model.find({ identifier: item.identifier }, function(err, model) {
-                if (err) console.log(err);
-                else {
-                    console.log(model[0].sellingPrice);
-                    console.log(item.number);
-                    totalPrice += (model[0].sellingPrice * item.number);
-                    model[0].materials.forEach(material => {
-                        updateMaterialStock(material.materialId, (material.number * (-1)));
-                    });
-                }
-            });
+    (async () => {
+        async function getTotalPrice(items) {
+            let totalPrice = 0;
+            for (let i = 0; i < items.length; i++) {
+                await Model.find({ identifier: items[i].identifier }, function(err, model) {
+                    if (err) console.log(err);
+                    else {
+                        totalPrice += (model[0].sellingPrice * items[i].number);
+                        model[0].materials.forEach(material => {
+                            updateMaterialStock(material.materialId, (material.number * (-1)));
+                        });
+                    }
+                });
+            }
+            return totalPrice;
+        }
+        var totalPrice = Number(await getTotalPrice(items));
+        
+        var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: totalPrice});
+ 
+        newOrder.save(function (err, result) {
+            if (err) console.log(err);
+            else res.send(result);
         });
-        // Model.find({ identifier: item.identifier }), function (err, model) {
-        //     if (err) console.log(err);
-        //     else {
-        //         console.log(model[0].sellingPrice);
-        //         console.log(item.number);
-        //         totalPrice += (model[0].sellingPrice * item.number);
-        //         model[0].materials.forEach(material => {
-        //             updateMaterialStock(material.materialId, (material.number * (-1)));
-        //         });
-        //     }
-        // });
-    console.log('Total price: ', totalPrice);
-    return totalPrice;
-}
+    })();
+});
 
 function updateMaterialStock(identifier, number) {
     Material.findOneAndUpdate({ identifier: identifier }, { $inc: { stock: number } }, function (err, material) {

@@ -1,124 +1,125 @@
-<div class="ordersOverview-container">
-
-    <h2>Auftragsübersicht</h2>
-
-    <!-- <form>
-        <div class="order-filter-container form-group">
-            <select class="form-control" [(ngModel)]="orderStatusFilter" id="orderStatusFilter">
-                <option [value]='' selected>Alle anzeigen</option>
-                <option [value]='progress'>In Progress</option>
-                <option [value]='done'>Done</option>
-                <option [value]='delivered'>Delivered</option>
-            </select>
+<div class="container">
+    <div class="ordersOverview-container">
+        <h2>Auftragsübersicht</h2>
+    
+        <!-- <form>
+            <div class="order-filter-container form-group">
+                <select class="form-control" [(ngModel)]="orderStatusFilter" id="orderStatusFilter">
+                    <option [value]='' selected>Alle anzeigen</option>
+                    <option [value]='progress'>In Progress</option>
+                    <option [value]='done'>Done</option>
+                    <option [value]='delivered'>Delivered</option>
+                </select>
+            </div>
+        </form> -->
+    
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Auftrags-ID</th>
+                        <th scope="col">Kunden-ID</th>
+                        <th scope="col">Waren</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Gesamtpreis</th>
+                        <th scope="col">Status ändern</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders" scope="row">
+                        <td>{{order.orderId}}</td>
+                        <td>{{order.customerId}}</td>
+                        <td>
+                            <ul *ngFor="let item of order.items">
+                                <li>{{item.number}} x {{item.identifier}}</li>
+                            </ul>
+                        </td>
+                        <td>{{order.status}}
+                        </td>
+                        <td class="amount">{{order.totalPrice}}</td>
+                        <td>
+                            <!-- <div class="status-button-container"> -->
+                            <div class="btn-group" role="group" aria-lable="change-status">
+                                <button type="button" class="btn btn-light btn-sm change-status-button"
+                                    (click)="onUpdateOrderToProgress(order)">
+                                    <img src="../../../assets/icons/build-24px.svg" class="icon"></button>
+                                <button type="button" class="btn btn-light btn-sm change-status-button"
+                                    (click)="onUpdateOrderToDone(order)">
+                                    <img src="../../../assets/icons/done-24px.svg" class="icon"></button>
+                                <button type="button" class="btn btn-light btn-sm change-status-button"
+                                    (click)="onUpdateOrderToDelivered(order)">
+                                    <img src="../../../assets/icons/local_shipping-24px.svg" class="icon"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </form> -->
-
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Auftrags-ID</th>
-                    <th scope="col">Kunden-ID</th>
-                    <th scope="col">Waren</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Gesamtpreis</th>
-                    <th scope="col">Status ändern</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let order of orders" scope="row">
-                    <td>{{order.orderId}}</td>
-                    <td>{{order.customerId}}</td>
-                    <td>
-                        <ul *ngFor="let item of order.items">
-                            <li>{{item.number}} x {{item.identifier}}</li>
-                        </ul>
-                    </td>
-                    <td>{{order.status}}
-                    </td>
-                    <td class="amount">{{order.totalPrice}}</td>
-                    <td>
-                        <!-- <div class="status-button-container"> -->
-                        <div class="btn-group" role="group" aria-lable="change-status">
-                            <button type="button" class="btn btn-light btn-sm change-status-button"
-                                (click)="onUpdateOrderToProgress(order)">
-                                <img src="../../../assets/icons/build-24px.svg" class="icon"></button>
-                            <button type="button" class="btn btn-light btn-sm change-status-button"
-                                (click)="onUpdateOrderToDone(order)">
-                                <img src="../../../assets/icons/done-24px.svg" class="icon"></button>
-                            <button type="button" class="btn btn-light btn-sm change-status-button"
-                                (click)="onUpdateOrderToDelivered(order)">
-                                <img src="../../../assets/icons/local_shipping-24px.svg" class="icon"></button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-</div>
-
-<div class="createNewOrder-container">
-    <h2>Auftrag anlegen</h2>
-    <form #createOrder="ngForm" (ngSubmit)="onSubmit(createOrder.value)">
-        <div class="form-group">
-            <label for="customerId">Kunde</label>
-            <select class="form-control" name="customerId" ngModel required>
-                <!-- <option [value]=''>Material wählen...</option> -->
-                <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
-                <option *ngFor="let customer of customers" [value]="customer.customerId">{{customer.name}}
-                </option>
-            </select>
-        </div>
-
-        <form #addItem="ngForm" (ngSubmit)="onAddToShoppingCart(addItem.value)">
-
+    
+    <div class="createNewOrder-container">
+        <h2>Auftrag anlegen</h2>
+        <form #createOrder="ngForm" (ngSubmit)="onSubmit(createOrder.value)">
             <div class="form-group">
-                <label for="identifier">Modell</label>
-                <select class="form-control" name="identifier" ngModel required>
+                <label for="customerId">Kunde</label>
+                <select class="form-control" name="customerId" ngModel required>
                     <!-- <option [value]=''>Material wählen...</option> -->
                     <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
-                    <option *ngFor="let model of models" [value]="model.identifier">{{model.identifier}}
+                    <option *ngFor="let customer of customers" [value]="customer.customerId">{{customer.name}}
                     </option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label for="amount">Anzahl</label>
-                <input type="number" class="form-control" name="number" ngModel required>
-            </div>
-
-            <button type="submit" class="btn btn-success">Hinzufügen</button>
-
-        </form>
-
-        <!-- <div class="shopping-cart-display" *ngIf="shoppingCart.length > 0">
-            <div class="item" *ngFor="let item of shoppingCart">
-                <h6 class="identifier" style="font-size: 14px;">{{item.identifier}}</h6>
-                <img [src]="generateSourcePath(item.identifier)" class="preview">
-                <p class="number">{{item.number}} x</p>
-            </div>
-        </div> -->
-
-        <div class="container" *ngIf="shoppingCart.length > 0">
-            <hr>
-            <h3>Einkaufswagen</h3>
-            <div class="row shopping-cart-display" >
-                <div class="card-deck">
-                    <div class="col-md-4" *ngFor="let item of shoppingCart">
-                        <div class="card">
-                            <img [src]="generateSourcePath(item.identifier)" class="card-img-top" style="height: 12rem;" alt="picture of the paperplane model">
-                            <div class="card-body">
-                                <h6 class="card-title">{{item.identifier}}</h6>
-                                <p class="card-text">{{item.number}} x</p>
+    
+            <form #addItem="ngForm" (ngSubmit)="onAddToShoppingCart(addItem.value)">
+    
+                <div class="form-group">
+                    <label for="identifier">Modell</label>
+                    <select class="form-control" name="identifier" ngModel required>
+                        <!-- <option [value]=''>Material wählen...</option> -->
+                        <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
+                        <option *ngFor="let model of models" [value]="model.identifier">{{model.identifier}}
+                        </option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="amount">Anzahl</label>
+                    <input type="number" class="form-control" name="number" ngModel required>
+                </div>
+    
+                <button type="submit" class="btn btn-success">Hinzufügen</button>
+    
+            </form>
+    
+            <!-- <div class="shopping-cart-display" *ngIf="shoppingCart.length > 0">
+                <div class="item" *ngFor="let item of shoppingCart">
+                    <h6 class="identifier" style="font-size: 14px;">{{item.identifier}}</h6>
+                    <img [src]="generateSourcePath(item.identifier)" class="preview">
+                    <p class="number">{{item.number}} x</p>
+                </div>
+            </div> -->
+    
+            <div class="container" *ngIf="shoppingCart.length > 0">
+                <hr>
+                <h3>Einkaufswagen</h3>
+                <div class="row shopping-cart-display" >
+                    <div class="card-deck">
+                        <div class="col-md-4" *ngFor="let item of shoppingCart">
+                            <div class="card">
+                                <img [src]="generateSourcePath(item.identifier)" class="card-img-top" style="height: 12rem;" alt="picture of the paperplane model">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{item.identifier}}</h6>
+                                    <p class="card-text">{{item.number}} x</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- <br> -->
+                <div class="row">
+                    <button type="submit" class="btn btn-success">Bestätigen</button>
+                </div>
             </div>
-            <!-- <br> -->
-            <div class="row">
-                <button type="submit" class="btn btn-success">Bestätigen</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
