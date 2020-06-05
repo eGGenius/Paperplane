@@ -3,8 +3,8 @@
 <div class="materialStockOverview-container">
     <h2>Übersicht des Materialbestands</h2>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-light">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">Material-ID</th>
                     <th scope="col">Name</th>
@@ -32,8 +32,7 @@
         <div class="form-group">
             <label for="materialId">Material</label>
             <select class="form-control" name="materialId" ngModel required>
-                <!-- <option [value]=''>Material wählen...</option> -->
-                <!-- Anzeige in material.identifier ändern, wenn in DB realisiert -->
+                <option value="" selected disabled>Material wählen...</option>
                 <option *ngFor="let material of materialStock" [value]="material.materialId">{{material.identifier}}
                 </option>
             </select>
@@ -41,7 +40,7 @@
 
         <div class="form-group">
             <label for="amount">Anzahl</label>
-            <input type="number" class="form-control" name="amount" ngModel required>
+            <input type="number" class="form-control" name="amount" placeholder="Anzahl eingeben" ngModel required>
         </div>
 
         <button type="submit" class="btn btn-success">Bestätigen</button>

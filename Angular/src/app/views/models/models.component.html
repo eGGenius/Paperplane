@@ -2,11 +2,23 @@
 
     <h2>Modellübersicht</h2>
 
-    <div class="items-container">
+    <!-- <div class="items-container">
         <div class="item" *ngFor="let model of models">
             <h6 class="identifier">{{model.identifier}}</h6>
             <img [src]="generateSourcePath(model.identifier)" class="preview">
+        </div>
+    </div> -->
 
+    <div class="container">
+        <div class="row" >
+            <div class="card-deck">
+                <div class="col-md-4" *ngFor="let model of models">
+                    <div class="card">
+                        <div class="card-header"><b>{{model.identifier}}</b></div>
+                        <img [src]="generateSourcePath(model.identifier)" class="card-img-bottom" style="height: 14rem;" alt="picture of the paperplane model">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

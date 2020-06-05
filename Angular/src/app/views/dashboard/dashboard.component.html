@@ -38,10 +38,10 @@
 </div>
 <br>
 <div class="container">
-  <h2>Auftragsbestand</h2>
+  <h2>Aufträge</h2>
   <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-light">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
         <tr>
           <th scope="col">Auftrags-ID</th>
           <th scope="col">Kunden-ID</th>
@@ -56,7 +56,7 @@
           <td>{{order.customerId}}</td>
           <td>
             <ul *ngFor="let item of order.items">
-              <li>{{item.number}} x {{item.model}}</li>
+              <li>{{item.number}} x {{item.identifier}}</li>
             </ul>
           </td>
           <td>{{order.status}}</td>
@@ -70,8 +70,8 @@
 <div class="container">
   <h2>Getätigte Lieferungen</h2>
   <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-light">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
         <tr>
           <th scope="col">Auftrags-ID</th>
           <th scope="col">Kunden-ID</th>
@@ -86,7 +86,7 @@
           <td>{{order.customerId}}</td>
           <td>
             <ul *ngFor="let item of order.items">
-              <li>{{item.number}} x {{item.model}}</li>
+              <li>{{item.number}} x {{item.identifier}}</li>
             </ul>
           </td>
           <td>{{order.status}}</td>

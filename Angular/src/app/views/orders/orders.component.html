@@ -2,19 +2,27 @@
 
     <h2>Auftragsübersicht</h2>
 
-    <div class="order-filter-container">
-        <p>ToDo: Filtern nach Order-Status</p>
-    </div>
+    <!-- <form>
+        <div class="order-filter-container form-group">
+            <select class="form-control" [(ngModel)]="orderStatusFilter" id="orderStatusFilter">
+                <option [value]='' selected>Alle anzeigen</option>
+                <option [value]='progress'>In Progress</option>
+                <option [value]='done'>Done</option>
+                <option [value]='delivered'>Delivered</option>
+            </select>
+        </div>
+    </form> -->
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-light">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">Auftrags-ID</th>
                     <th scope="col">Kunden-ID</th>
                     <th scope="col">Waren</th>
                     <th scope="col">Status</th>
                     <th scope="col">Gesamtpreis</th>
+                    <th scope="col">Status ändern</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,21 +31,21 @@
                     <td>{{order.customerId}}</td>
                     <td>
                         <ul *ngFor="let item of order.items">
-                            <li>{{item.number}} x {{item.model}}</li>
+                            <li>{{item.number}} x {{item.identifier}}</li>
                         </ul>
                     </td>
                     <td>{{order.status}}</td>
                     <td class="amount">{{order.totalPrice}}</td>
                     <td>
-                        <div class="status-button-container">
-
-                            <button type="button" class="btn btn-light btn-circle btn-md"
+                        <!-- <div class="status-button-container"> -->
+                        <div class="btn-group" role="group" aria-lable="change-status">
+                            <button type="button" class="btn btn-light btn-sm change-status-button"
                                 (click)="onUpdateOrderToProgress(order)">
                                 <img src="../../../assets/icons/build-24px.svg" class="icon"></button>
-                            <button type="button" class="btn btn-light btn-circle btn-md"
+                            <button type="button" class="btn btn-light btn-sm change-status-button"
                                 (click)="onUpdateOrderToDone(order)">
                                 <img src="../../../assets/icons/done-24px.svg" class="icon"></button>
-                            <button type="button" class="btn btn-light btn-circle btn-md"
+                            <button type="button" class="btn btn-light btn-sm change-status-button"
                                 (click)="onUpdateOrderToDelivered(order)">
                                 <img src="../../../assets/icons/local_shipping-24px.svg" class="icon"></button>
                         </div>
@@ -82,14 +90,34 @@
 
         </form>
 
-        <div class="shopping-cart-display">
+        <!-- <div class="shopping-cart-display" *ngIf="shoppingCart.length > 0">
             <div class="item" *ngFor="let item of shoppingCart">
                 <h6 class="identifier" style="font-size: 14px;">{{item.identifier}}</h6>
                 <img [src]="generateSourcePath(item.identifier)" class="preview">
                 <p class="number">{{item.number}} x</p>
             </div>
+        </div> -->
+
+        <div class="container" *ngIf="shoppingCart.length > 0">
+            <hr>
+            <h3>Einkaufswagen</h3>
+            <div class="row shopping-cart-display" >
+                <div class="card-deck">
+                    <div class="col-md-4" *ngFor="let item of shoppingCart">
+                        <div class="card">
+                            <img [src]="generateSourcePath(item.identifier)" class="card-img-top" style="height: 12rem;" alt="picture of the paperplane model">
+                            <div class="card-body">
+                                <h6 class="card-title">{{item.identifier}}</h6>
+                                <p class="card-text">{{item.number}} x</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <br> -->
+            <div class="row">
+                <button type="submit" class="btn btn-success">Bestätigen</button>
+            </div>
         </div>
-        <br>
-        <button type="submit" class="btn btn-success">Bestätigen</button>
     </form>
 </div>

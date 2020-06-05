@@ -205,35 +205,41 @@ app.post(apiPrefix + "/order", function (req, res) {
     var items = req.body.items;
     var itemsRes = [];
 
-    console.log('Ordered items: ', items);
+    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: getTotalPrice(items) });
 
-    var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, status: 'progress', totalPrice: getTotalPrice(items) });
-
-    for (let i = 0; i < items.length; i++) {
-        itemsRes.push('{"_id":"' + mongoose.Types.ObjectId() + '","identifier":"' + items[i].identifier + '","number":' + items[i].number + '}');
-
-    }
-
-    // newOrder.items.push(itemsRes);
     newOrder.save(function (err, result) {
         if (err) console.log(err);
         else res.send(result);
     });
 });
 
-async function getTotalPrice(items) {
-    var totalPrice = 0;
-    for (let i = 0; i < items.length; i++) {
-        await Model.find({ identifier: items[i].identifier }, function (err, model) {
-            if (err) console.log(err);
-            else {
-                totalPrice += (model[0].sellingPrice * items[i].number);
-                model[0].materials.forEach(material => {
-                    updateMaterialStock(material.materialId, (material.number * (-1)));
-                });
-            }
+function getTotalPrice(items) {
+    console.log('get Total price...')
+    let totalPrice = 0;
+    items.forEach((item) => {
+            Model.find({ identifier: item.identifier }, function(err, model) {
+                if (err) console.log(err);
+                else {
+                    console.log(model[0].sellingPrice);
+                    console.log(item.number);
+                    totalPrice += (model[0].sellingPrice * item.number);
+                    model[0].materials.forEach(material => {
+                        updateMaterialStock(material.materialId, (material.number * (-1)));
+                    });
+                }
+            });
         });
-    }
+        // Model.find({ identifier: item.identifier }), function (err, model) {
+        //     if (err) console.log(err);
+        //     else {
+        //         console.log(model[0].sellingPrice);
+        //         console.log(item.number);
+        //         totalPrice += (model[0].sellingPrice * item.number);
+        //         model[0].materials.forEach(material => {
+        //             updateMaterialStock(material.materialId, (material.number * (-1)));
+        //         });
+        //     }
+        // });
     console.log('Total price: ', totalPrice);
     return totalPrice;
 }
