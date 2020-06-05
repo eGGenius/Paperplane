@@ -53,7 +53,7 @@ export class HttpService {
     }
 
     public getAllOrdersInDelivery() {
-        return this.httpClient.get(this.url + 'orders/delivery');
+        return this.httpClient.get(this.url + 'orders/delivered');
     }
 
     public updateOrderToProgress(orderId: String) {

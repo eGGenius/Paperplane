@@ -1,32 +1,32 @@
 .chart{
     border: 1px solid black;
-    padding: 1rem;
+    padding: 0.7rem 0 0 1rem;
     border-radius: 1rem;
-
+    margin-top: 1rem;
 }
+
 .container{
     border: 1px solid black;
     padding: 1rem;
     border-radius: 1rem;
 }
+
+.first-dashboard-row {
+    height: 20%;
+}
+
+.second-dashboard-row {
+    height: 70%;
+}
 .ordersOverview-container {
     border: 1px solid black;
     padding: 1rem;
     border-radius: 1rem;
-
-}
-
-.guv-display-container {
-    height: 45px;
-    width: auto;
 }
 
 .guv-display-positive, .guv-display-neutral, .guv-display-negative {
     border: 1px solid black;
-    border-radius: 2px;
     text-align: center;
-    width: 200px;
-    height: 100%;
 }
 
 .guv-display-positive {
@@ -38,5 +38,5 @@
 }
 
 .guv-display-negative {
-background-color: #FF7676;
+    background-color: #FF7676;
 }

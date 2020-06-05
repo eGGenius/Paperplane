@@ -46,8 +46,10 @@ export class DashboardComponent {
       categories: number[];
     };
   };
+
   orders: Order[] = [];
   ordersDone: Order[] = [];
+
   wareneinsatz: number = 0;
   amount: any;
 
@@ -57,14 +59,13 @@ export class DashboardComponent {
 
 
   constructor(private http: HttpService) {
-
     this.http.getAllMaterialStock().subscribe((data: Material[]) => {
       this.materialStock = data;
       var mat_names: number[] = new Array(Object.keys(this.materialStock).length)
       var mat_val: number[] = new Array(Object.keys(this.materialStock).length)
       for (var i = 0; i < mat_val.length; i++) {
         mat_val[i] = this.materialStock[i].stock;
-        mat_names[i] = this.materialStock[i].materialId;
+        mat_names[i] = this.materialStock[i].identifier;
         this.wareneinsatz = this.wareneinsatz + this.materialStock[i].stock * this.materialStock[i].pricePerUnit;
       }
 

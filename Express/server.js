@@ -166,6 +166,7 @@ app.get(apiPrefix + "/orders/:status", function (req, res) {
             });
             break;
         default:
+            console.log(req.params.status);
             Order.find({ status: req.params.status }, function (err, orders) {
                 if (err) return console.log(err);
                 else res.send(orders);

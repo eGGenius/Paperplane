@@ -1,25 +1,40 @@
-<div class="unselectable">
-  <h2>Aktuelle Gewinn- und Verlustrechung</h2>
-
-  <!-- <div class="guv-display-container"> -->
-
-    <div class="guv-display-positive" *ngIf="positive">
-      <h3 class="amount">{{ amount }}</h3>
+<div class="unselectable row first-dashboard-row">
+  <div class="col-md-4">
+    <div class="container">
+      <div class="guv-display-container">
+        <h4>Aktuelle Gewinn- und Verlustrechung</h4>
+        <div class="guv-display-positive" *ngIf="positive">
+          <h4 class="amount">{{ amount }}</h4>
+        </div>
+        <div class="guv-display-neutral" *ngIf="neutral">
+          <h4 class="amount">{{ amount }}</h4>
+        </div>
+        <div class="guv-display-negative" *ngIf="negative">
+          <h4 class="amount">{{ amount }}</h4>
+        </div>
+      </div>
     </div>
-    <div class="guv-display-neutral" *ngIf="neutral">
-      <h3 class="amount">{{ amount }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="container">
+      <h4>Offene Aufträge:</h4>
+      <div class="guv-display-container">
+        <h4>{{ orders.length }} </h4>
+      </div>
     </div>
-    <div class="guv-display-negative" *ngIf="negative">
-      <h3 class="amount">{{ amount }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="container">
+      <h4>Getätigte Lieferungen:</h4>
+      <div class="guv-display-container">
+        <h4>{{ ordersDone.length }}</h4>
+      </div>
     </div>
-
-  <!-- </div> -->
-
+  </div>
 </div>
-<br>
-<div>
-  <div class="row">
-    <div class="col-sm">
+
+  <div class="row second-dashboard-row">
+    <div class="col-md-6">
       <div class="chart">
         <h2>Materialbestand</h2>
         <apx-chart [series]="matChartOptions.series" [chart]="matChartOptions.chart" [xaxis]="matChartOptions.xaxis">
@@ -27,7 +42,8 @@
         <!-- <img src="../assets/lager.jpeg"> -->
       </div>
     </div>
-    <div class="col-sm">
+  
+    <div class="col-md-6">
       <div class="chart">
         <h2>Produktbestand</h2>
         <apx-chart [series]="prodChartOptions.series" [chart]="prodChartOptions.chart" [xaxis]="prodChartOptions.xaxis">
@@ -35,10 +51,9 @@
       </div>
     </div>
   </div>
-</div>
-<br>
+
 <!-- <div class="container"> -->
-  <h2>Aufträge</h2>
+  <!-- <h2>Aufträge</h2>
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead class="thead-dark">
@@ -65,10 +80,10 @@
       </tbody>
     </table>
   </div>
-<!-- </div> -->
-<br>
+ </div> -->
+<!-- <br> -->
 <!-- <div class="container"> -->
-  <h2>Getätigte Lieferungen</h2>
+  <!-- <h2>Getätigte Lieferungen</h2>
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead class="thead-dark">
@@ -94,5 +109,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> -->
 <!-- </div> -->
