@@ -53,7 +53,6 @@ export class OrdersComponent implements OnInit {
         this.orders = data;
       }); 
     } else {
-      console.log('show All')
       this.http.getAllOrders().subscribe((data: Order[]) => {
         this.orders = data;
       })

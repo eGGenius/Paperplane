@@ -1,33 +1,48 @@
-<div class="unselectable row first-dashboard-row">
-  <div class="col-md-4">
+<div class="unselectable row">
+  <div class="col-md-4 col-sm-12 mb-md-0 mb-sm-2">
     <div class="container">
-      <div class="guv-display-container">
-        <h4>Aktuelle Gewinn- und Verlustrechung</h4>
-        <div class="guv-display-positive" *ngIf="positive">
-          <h4 class="amount">{{ amount }}</h4>
+      <div class="row">
+        <div class="col-12">
+          <p class="dashboard-heading" style="text-align: center;">Aktuelle Gewinn- und Verlustrechung</p>
         </div>
-        <div class="guv-display-neutral" *ngIf="neutral">
-          <h4 class="amount">{{ amount }}</h4>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 guv-display-positive" *ngIf="positive">
+          <p class="amount amount-p">{{ amount }}</p>
         </div>
-        <div class="guv-display-negative" *ngIf="negative">
-          <h4 class="amount">{{ amount }}</h4>
+        <div class="col-10  guv-display-neutral" *ngIf="neutral">
+          <p class="amount amount-p">{{ amount }}</p>
+        </div>
+        <div class="col-10  guv-display-negative" *ngIf="negative">
+          <p class="amount amount-p">{{ amount }}</p>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-md-0 mb-sm-2">
+    <div class="container h-100 ">
+      <div class="row" style="margin: 1rem 0;">
+        <div class="col-8">
+          <p class="dashboard-heading align-middle" >offene Aufträge:</p>
+        </div>
+        <div class="col-4">
+          <p class="amount-p">{{ orders.length }} </p>
         </div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="container">
-      <h4>Offene Aufträge:</h4>
-      <div class="guv-display-container">
-        <h4>{{ orders.length }} </h4>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="container">
-      <h4>Getätigte Lieferungen:</h4>
-      <div class="guv-display-container">
-        <h4>{{ ordersDone.length }}</h4>
+    <div class="container h-100">
+      <div class="row" style="margin: 1rem 0;">
+        <div class="col-8" >
+         <p class="dashboard-heading" >getätigte Lieferungen:</p>
+        </div>
+        <div class="col-4">
+          <p class="amount-p">{{ ordersDone.length }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -36,7 +51,7 @@
   <div class="row second-dashboard-row">
     <div class="col-md-6">
       <div class="chart">
-        <h2>Materialbestand</h2>
+        <p class="dashboard-heading">Materialbestand</p>
         <apx-chart [series]="matChartOptions.series" [chart]="matChartOptions.chart" [xaxis]="matChartOptions.xaxis">
         </apx-chart>
         <!-- <img src="../assets/lager.jpeg"> -->
@@ -45,7 +60,7 @@
   
     <div class="col-md-6">
       <div class="chart">
-        <h2>Produktbestand</h2>
+        <p class="dashboard-heading">Produktbestand</p>
         <apx-chart [series]="prodChartOptions.series" [chart]="prodChartOptions.chart" [xaxis]="prodChartOptions.xaxis">
         </apx-chart>
       </div>

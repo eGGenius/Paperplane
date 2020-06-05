@@ -137,10 +137,10 @@ app.put(apiPrefix + "/materials/:id", function (req, res) {
 
         var result = 0;
         Material.findOne({ materialId: id }, function (err, material) {
-            console.log(material);
-            console.log('PricePerUnit: ', material.pricePerUnit);
+            // console.log(material);
+            // console.log('PricePerUnit: ', material.pricePerUnit);
             result = (material.pricePerUnit * number * (-1));
-            console.log(result);
+            // console.log(result);
             updateAccountBalance(result);
         });
     }
@@ -166,7 +166,6 @@ app.get(apiPrefix + "/orders/:status", function (req, res) {
             });
             break;
         default:
-            console.log(req.params.status);
             Order.find({ status: req.params.status }, function (err, orders) {
                 if (err) return console.log(err);
                 else res.send(orders);
