@@ -84,8 +84,27 @@ app.use(function (req, res, next) {
 });
 
 app.listen(serverPort, () => {
+    initProductStock();
     console.log('Server started!');
 });
+
+function initProductStock() {
+    Model.updateMany({}, { $set: { stock: 0 } }, function (err, models) {
+        if (err) console.log(err);
+    });
+    Order.find({ status: 'done' }, function (err, orders) {
+        if (err) console.log(err);
+        else {
+            for (let i = 0; i < orders.length; i++) {
+                for (let j = 0; j < orders[i].items.length; j++) {
+                    Model.findOneAndUpdate({ identifier: orders[i].items[j].identifier }, { $inc: { stock: orders[i].items[j].number } }, function (err, model) {
+                        if (err) console.log(err);
+                    });
+                }
+            }
+        }
+    });
+}
 
 app.get(apiPrefix + "/customers/:id", function (req, res) {
     switch (req.params.id) {
@@ -123,11 +142,7 @@ app.put(apiPrefix + "/materials/:id", function (req, res) {
             result = (material.pricePerUnit * number * (-1));
             console.log(result);
             updateAccountBalance(result);
-
         });
-
-
-
     }
     Material.findOneAndUpdate({ materialId: id }, { $inc: { stock: number } }, function (err, material) {
         if (err) return console.log(err);
@@ -141,13 +156,6 @@ app.get(apiPrefix + "/products/all", function (req, res) {
         else return res.status(200).send(products);
     });
 });
-
-// app.put(apiPrefix + "/products/:model", function (req, res) {
-//     Model.findOneAndUpdate({ identifier: req.params.model }, { $inc: { stock: req.body.number } }, function (err, model) {
-//         if (err) return console.log(err);
-//         else return res.status(200).send(model);
-//     });
-// });
 
 app.get(apiPrefix + "/orders/:status", function (req, res) {
     switch (req.params.status) {
