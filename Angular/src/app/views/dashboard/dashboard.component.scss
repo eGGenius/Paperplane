@@ -1,28 +1,37 @@
 .chart{
     border: 1px solid black;
-    padding: 0.7rem 0 0 1rem;
-    border-radius: 1rem;
-    margin-top: 1rem;
+    padding: .5rem 0 0 1rem;
+    border-radius: .7rem;
+    margin-top: 0.7rem;
 }
 
-.container{
+.container {
     border: 1px solid black;
-    padding: 1rem;
-    border-radius: 1rem;
+    padding: .3rem .5rem;
+    border-radius: .7rem;
 }
 
-.first-dashboard-row {
-    height: 20%;
+.showAmount {
+    text-align: center;
 }
 
-.second-dashboard-row {
-    height: 70%;
+.dashboard-heading {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
 }
-.ordersOverview-container {
-    border: 1px solid black;
-    padding: 1rem;
-    border-radius: 1rem;
+
+.amount-p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
 }
+
+// .ordersOverview-container {
+//     border: 1px solid black;
+//     padding: 1rem;
+//     border-radius: 1rem;
+// }
 
 .guv-display-positive, .guv-display-neutral, .guv-display-negative {
     border: 1px solid black;
