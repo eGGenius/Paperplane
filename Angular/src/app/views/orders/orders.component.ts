@@ -12,8 +12,10 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
-
+  
   orders: Order[];
+  orderStatusFilter: String = 'showAll';
+
   shoppingCart: CartItem[] = [];
   customers: Customer[];
   models: Model[];
@@ -27,12 +29,35 @@ export class OrdersComponent implements OnInit {
     this.http.getAllOrders().subscribe((data: Order[]) => {
       this.orders = data;
     });
+    
     this.http.getAllCustomers().subscribe((data: Customer[]) => {
       this.customers = data;
     });
     this.http.getAllModels().subscribe((data: Model[]) => {
       this.models = data;
     });
+  }
+
+  onStatusFilterChange(newStatusFilter) {
+    this.orderStatusFilter = newStatusFilter;
+    if(newStatusFilter === 'showInProgress') {
+      this.http.getAllOrdersInProgress().subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    } else if(newStatusFilter === 'showDone') {
+      this.http.getAllOrdersDone().subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    } else if(newStatusFilter === 'showDelivered') {
+      this.http.getAllOrdersInDelivery().subscribe((data: Order[]) => {
+        this.orders = data;
+      }); 
+    } else {
+      console.log('show All')
+      this.http.getAllOrders().subscribe((data: Order[]) => {
+        this.orders = data;
+      })
+    }
   }
 
   onUpdateOrderToProgress(order: Order) {
@@ -43,7 +68,6 @@ export class OrdersComponent implements OnInit {
         });
       });
     }
-
   }
 
   onUpdateOrderToDone(order: Order) {
@@ -89,20 +113,3 @@ export class OrdersComponent implements OnInit {
     return this.domSanitizer.bypassSecurityTrustUrl(result);
   }
 }
-
-// Order HTTP Requests in http-Service:
-
-// POST createNewOrder(customerId: String, items: [{ model: String, number: Number }]) {
-//       {"customerId":"' + customerId + '",
-//       "items":"' + items + '"}
-
-  // GET getAllOrders()
-
-  // GET getAllOrdersInProgress()
-
-  // GET getAllOrdersDone()
-
-  // GET getAllOrdersInDelivery()
-
-  // PUT updateOrderToDone(orderId: String) 
-    // '{"status":"done"}'));

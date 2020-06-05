@@ -2,16 +2,17 @@
     <div class="ordersOverview-container">
         <h2>Auftragsübersicht</h2>
     
-        <!-- <form>
+        <form> 
             <div class="order-filter-container form-group">
-                <select class="form-control" [(ngModel)]="orderStatusFilter" id="orderStatusFilter">
-                    <option [value]='' selected>Alle anzeigen</option>
-                    <option [value]='progress'>In Progress</option>
-                    <option [value]='done'>Done</option>
-                    <option [value]='delivered'>Delivered</option>
+                <!-- <select [ngModel]="selectedDevice" (ngModelChange)="onChange($event)" name="sel2"> -->
+                <select class="form-control" [ngModel]="orderStatusFilter" (ngModelChange)="onStatusFilterChange($event)" name="orderStatusFilter" id="orderStatusFilter">
+                    <option [value]='"showAll"' selected>Alle anzeigen</option>
+                    <option [value]='"showInProgress"'>in Produktion</option>
+                    <option [value]='"showDone"'>fertiggestellt</option>
+                    <option [value]='"showDelivered"'>ausgeliefert</option>
                 </select>
             </div>
-        </form> -->
+        </form>
     
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -34,8 +35,12 @@
                                 <li>{{item.number}} x {{item.identifier}}</li>
                             </ul>
                         </td>
-                        <td>{{order.status}}
-                        </td>
+                        <td *ngIf='order.status=="progress"'>in Produktion</td>
+                        <td *ngIf='order.status=="done"'>fertiggestellt</td>
+                        <td *ngIf='order.status=="delivered"'>ausgeliefert</td>
+                        <!-- <td>
+                            {{order.status}}
+                        </td> -->
                         <td class="amount">{{order.totalPrice}}</td>
                         <td>
                             <!-- <div class="status-button-container"> -->
@@ -71,7 +76,6 @@
             </div>
     
             <form #addItem="ngForm" (ngSubmit)="onAddToShoppingCart(addItem.value)">
-    
                 <div class="form-group">
                     <label for="identifier">Modell</label>
                     <select class="form-control" name="identifier" ngModel required>
