@@ -208,7 +208,7 @@ app.post(apiPrefix + "/order", function (req, res) {
         async function getTotalPrice(items) {
             let totalPrice = 0;
             for (let i = 0; i < items.length; i++) {
-                await Model.find({ identifier: items[i].identifier }, function(err, model) {
+                await Model.find({ identifier: items[i].identifier }, function (err, model) {
                     if (err) console.log(err);
                     else {
                         totalPrice += (model[0].sellingPrice * items[i].number);
@@ -221,9 +221,9 @@ app.post(apiPrefix + "/order", function (req, res) {
             return totalPrice;
         }
         var totalPrice = Number(await getTotalPrice(items));
-        
-        var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: totalPrice});
- 
+
+        var newOrder = new Order({ orderId: uuidv1(), customerId: req.body.customerId, items: items, status: 'progress', totalPrice: totalPrice });
+
         newOrder.save(function (err, result) {
             if (err) console.log(err);
             else res.send(result);
@@ -231,8 +231,8 @@ app.post(apiPrefix + "/order", function (req, res) {
     })();
 });
 
-function updateMaterialStock(identifier, number) {
-    Material.findOneAndUpdate({ identifier: identifier }, { $inc: { stock: number } }, function (err, material) {
+function updateMaterialStock(materialId, number) {
+    Material.findOneAndUpdate({ materialId: materialId }, { $inc: { stock: number } }, function (err, material) {
         if (err) return console.log(err);
     });
 }
